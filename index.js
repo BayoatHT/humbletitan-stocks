@@ -14,6 +14,12 @@ AWS.config.update({ region: 'us-east-1' });
    res.send("GUDDI CHUTIYA")
  })
 
+ app.get('/mudassir',(req,res)=>{
+   res.json({
+     "Guddi":"Bhrwa"
+   })
+ })
+
 app.listen(process.env.PORT || 3000, () => {
   console.log(`listening on port`)
 })
