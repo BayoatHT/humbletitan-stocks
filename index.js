@@ -2,39 +2,14 @@ const AWS = require('aws-sdk')
 require('dotenv').config()
 const express = require('express')
 var path = require("path");
-// const cors = require('cors')
+const cors = require('cors')
 const app = express()
-const fastify = require('fastify')()
+app.use(express.static(path.join(__dirname, './')));
 
+app.use(cors({
+  origin: '*'
+}));
 
-fastify.register(require('fastify-cors'), { 
-  // put your options here
-  origin: "*"
-})
-
-// app.use(cors({
-//   origin: '*'
-// }));
-
-// Add headers before the routes are defined
-// app.use(function (req, res) {
-
-//   // Website you wish to allow to connect
-//   res.setHeader('Access-Control-Allow-Origin', 'https://designinguru.com');
-
-//   // Request methods you wish to allow
-//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-//   // Request headers you wish to allow
-//   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-//   // Set to true if you need the website to include cookies in the requests sent
-//   // to the API (e.g. in case you use sessions)
-//   res.setHeader('Access-Control-Allow-Credentials', true);
-
-//   // Pass to next layer of middleware
-//   
-// });
 
 AWS.config.update({ region: 'us-east-1' });
  
@@ -214,7 +189,7 @@ const sortArray = (tickers) => {
 
 
 
-fastify.get('/', (req, res) => {
+app.get('/', (req, res) => {
   let data = []
   for (i = 0; i == 30; i++) {
     data.push(allTickers[i])
@@ -222,20 +197,22 @@ fastify.get('/', (req, res) => {
   res.send(data)
 })
 
-fastify.get('/alltickersort', async (req, res) => {
-  
+app.get('/alltickersort', async (req, res) => {
+  res.header('Access-Control-Allow-Origin', "*");
+   res.header('Access-Control-Allow-Methods', 'GET');
   res.json(sortedData)
-  
 })
 
-fastify.get('/tickers_page/:id', (req, res) => {
+app.get('/tickers_page/:id', (req, res) => {
   let Id = req.params.id - 1
+  res.header('Access-Control-Allow-Origin', "*");
+  res.header('Access-Control-Allow-Methods', 'GET');
   res.json([pagination[Id],{itemLength:sortedData.length}])
-  
-  
 })
 
-fastify.get('/sectors/:name',(req,res)=>{
+app.get('/sectors/:name',(req,res)=>{
+  res.header('Access-Control-Allow-Origin', "*");
+  res.header('Access-Control-Allow-Methods', 'GET');
    let name = req.params.name
    let pageNo = req.query.pageNo - 1
    let data= sectorsFilteredData.filter(item=> {
@@ -253,11 +230,10 @@ fastify.get('/sectors/:name',(req,res)=>{
      let length= response[0].itemsLength
      res.json([resp,{itemLength:length}])
    }  
-   res.header('Access-Control-Allow-Origin', "*");
-   res.header('Access-Control-Allow-Methods', 'GET');
-   
 })
-fastify.get('/countries/:name',(req,res)=>{
+app.get('/countries/:name',(req,res)=>{
+  res.header('Access-Control-Allow-Origin', "*");
+  res.header('Access-Control-Allow-Methods', 'GET');
    let name = req.params.name
   let pageNo = req.query.pageNo - 1
   let data= countryFilteredData.filter(item=> {
@@ -275,9 +251,10 @@ fastify.get('/countries/:name',(req,res)=>{
     let length= response[0].itemsLength
     res.json([resp,{itemLength:length}])
   }  
-  
 })
-fastify.get('/industries/:name',(req,res)=>{
+app.get('/industries/:name',(req,res)=>{
+  res.header('Access-Control-Allow-Origin', "*");
+   res.header('Access-Control-Allow-Methods', 'GET');
   let name = req.params.name
    let pageNo = req.query.pageNo - 1
   let data= industryFilteredData.filter(item=> {
@@ -295,9 +272,7 @@ fastify.get('/industries/:name',(req,res)=>{
     let length= response[0].itemsLength
     res.json([resp,{itemLength:length}])
   }  
-  res.header('Access-Control-Allow-Origin', "*");
-   res.header('Access-Control-Allow-Methods', 'GET');
-   
+  
 })
  
 
@@ -313,7 +288,9 @@ const getDataById = async(id, TABLE_NAME)=>{
     return data
 }
 
-fastify.get('/companydetails/:symbol',async(req,res)=>{
+app.get('/companydetails/:symbol',async(req,res)=>{
+  res.header('Access-Control-Allow-Origin', "*");
+   res.header('Access-Control-Allow-Methods', 'GET');
   const PROFILE_TABLENAME = "CompanyProfile"
   const SHARES_TABLENAME = "SharesFloat"
   const FINANCIALRATIO_TABLENAME = "FinancialRatiosTTM"
@@ -339,12 +316,12 @@ fastify.get('/companydetails/:symbol',async(req,res)=>{
     res.status(500).json({ err: 'Something went wrong' })
     return;
   }
-  res.header('Access-Control-Allow-Origin', "*");
-   res.header('Access-Control-Allow-Methods', 'GET');
-   
+  
 }) 
 
-fastify.get('/competitors/:symbol', async (req, res) => {
+app.get('/competitors/:symbol', async (req, res) => {
+  res.header('Access-Control-Allow-Origin', "*");
+   res.header('Access-Control-Allow-Methods', 'GET');
   const TABLE_NAME = "Peers"
   const id = req.params.symbol
   try {
@@ -368,9 +345,7 @@ fastify.get('/competitors/:symbol', async (req, res) => {
     console.error(error)
     res.status(500).json({ err: 'Something went wrong' })
   }
-  res.header('Access-Control-Allow-Origin', "*");
-   res.header('Access-Control-Allow-Methods', 'GET');
-   
+  
 })
  
 const port = process.env.PORT || 3000
