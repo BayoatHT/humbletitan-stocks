@@ -196,20 +196,20 @@ app.get('/', (req, res) => {
   res.send(data)
 })
 
-app.get('/alltickersort', async (req, res) => {
+app.get('/alltickersort', async (req, res, next) => {
   res.header('Access-Control-Allow-Origin', "*");
    res.header('Access-Control-Allow-Methods', 'GET');
   res.json(sortedData)
 })
 
-app.get('/tickers_page/:id', (req, res) => {
+app.get('/tickers_page/:id', (req, res, next) => {
   let Id = req.params.id - 1
   res.json([pagination[Id],{itemLength:sortedData.length}])
   res.header('Access-Control-Allow-Origin', "*");
   res.header('Access-Control-Allow-Methods', 'GET');
 })
 
-app.get('/sectors/:name',(req,res)=>{
+app.get('/sectors/:name',(req,res, next)=>{
    let name = req.params.name
    let pageNo = req.query.pageNo - 1
    let data= sectorsFilteredData.filter(item=> {
@@ -230,7 +230,7 @@ app.get('/sectors/:name',(req,res)=>{
    res.header('Access-Control-Allow-Origin', "*");
    res.header('Access-Control-Allow-Methods', 'GET');
 })
-app.get('/countries/:name',(req,res)=>{
+app.get('/countries/:name',(req,res, next)=>{
    let name = req.params.name
   let pageNo = req.query.pageNo - 1
   let data= countryFilteredData.filter(item=> {
@@ -250,7 +250,7 @@ app.get('/countries/:name',(req,res)=>{
   }  res.header('Access-Control-Allow-Origin', "*");
   res.header('Access-Control-Allow-Methods', 'GET');
 })
-app.get('/industries/:name',(req,res)=>{
+app.get('/industries/:name',(req,res, next)=>{
   let name = req.params.name
    let pageNo = req.query.pageNo - 1
   let data= industryFilteredData.filter(item=> {
@@ -285,7 +285,7 @@ const getDataById = async(id, TABLE_NAME)=>{
     return data
 }
 
-app.get('/companydetails/:symbol',async(req,res)=>{
+app.get('/companydetails/:symbol',async(req,res, next)=>{
   const PROFILE_TABLENAME = "CompanyProfile"
   const SHARES_TABLENAME = "SharesFloat"
   const FINANCIALRATIO_TABLENAME = "FinancialRatiosTTM"
@@ -315,7 +315,7 @@ app.get('/companydetails/:symbol',async(req,res)=>{
    res.header('Access-Control-Allow-Methods', 'GET');
 }) 
 
-app.get('/competitors/:symbol', async (req, res) => {
+app.get('/competitors/:symbol', async (req, res, next) => {
   const TABLE_NAME = "Peers"
   const id = req.params.symbol
   try {
