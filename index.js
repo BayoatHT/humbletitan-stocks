@@ -218,8 +218,9 @@ app.get('/', (req, res) => {
 
 app.get('/alltickersort', async (req, res, next) => {
   res.header('Access-Control-Allow-Origin', "*");
-   res.header('Access-Control-Allow-Methods', 'GET');
+  res.header('Access-Control-Allow-Methods', 'GET');
   res.json(sortedData)
+  next();
 })
 
 app.get('/tickers_page/:id', (req, res, next) => {
@@ -227,6 +228,7 @@ app.get('/tickers_page/:id', (req, res, next) => {
   res.json([pagination[Id],{itemLength:sortedData.length}])
   res.header('Access-Control-Allow-Origin', "*");
   res.header('Access-Control-Allow-Methods', 'GET');
+  next();
 })
 
 app.get('/sectors/:name',(req,res, next)=>{
@@ -249,6 +251,7 @@ app.get('/sectors/:name',(req,res, next)=>{
    }  
    res.header('Access-Control-Allow-Origin', "*");
    res.header('Access-Control-Allow-Methods', 'GET');
+   next();
 })
 app.get('/countries/:name',(req,res, next)=>{
    let name = req.params.name
@@ -269,6 +272,7 @@ app.get('/countries/:name',(req,res, next)=>{
     res.json([resp,{itemLength:length}])
   }  res.header('Access-Control-Allow-Origin', "*");
   res.header('Access-Control-Allow-Methods', 'GET');
+  next();
 })
 app.get('/industries/:name',(req,res, next)=>{
   let name = req.params.name
@@ -290,6 +294,7 @@ app.get('/industries/:name',(req,res, next)=>{
   }  
   res.header('Access-Control-Allow-Origin', "*");
    res.header('Access-Control-Allow-Methods', 'GET');
+   next();
 })
  
 
@@ -333,6 +338,7 @@ app.get('/companydetails/:symbol',async(req,res, next)=>{
   }
   res.header('Access-Control-Allow-Origin', "*");
    res.header('Access-Control-Allow-Methods', 'GET');
+   next();
 }) 
 
 app.get('/competitors/:symbol', async (req, res, next) => {
@@ -361,6 +367,7 @@ app.get('/competitors/:symbol', async (req, res, next) => {
   }
   res.header('Access-Control-Allow-Origin', "*");
    res.header('Access-Control-Allow-Methods', 'GET');
+   next();
 })
  
 const port = process.env.PORT || 3000
