@@ -6,8 +6,9 @@ const cors = require('cors')
 const app = express()
 app.use(express.static(path.join(__dirname, './')));
 
-app.use(cors())
-
+app.use(cors({
+  origin: 'https://designinguru.com'
+}));
 
 AWS.config.update({ region: 'us-east-1' });
  
@@ -187,7 +188,7 @@ const sortArray = (tickers) => {
 
 
 
-app.get('/', (req, res,next) => {
+app.get('/', (req, res) => {
   let data = []
   for (i = 0; i == 30; i++) {
     data.push(allTickers[i])
@@ -195,11 +196,11 @@ app.get('/', (req, res,next) => {
   res.send(data)
 })
 
-app.get('/alltickersort', async (req, res,next) => {
+app.get('/alltickersort', async (req, res) => {
   res.json(sortedData)
 })
 
-app.get('/tickers_page/:id', (req, res,next) => {
+app.get('/tickers_page/:id', (req, res) => {
   let Id = req.params.id - 1
   res.json([pagination[Id],{itemLength:sortedData.length}])
 
@@ -305,7 +306,7 @@ app.get('/companydetails/:symbol',async(req,res)=>{
   }
 }) 
 
-app.get('/competitors/:symbol', async (req, res,next) => {
+app.get('/competitors/:symbol', async (req, res) => {
   const TABLE_NAME = "Peers"
   const id = req.params.symbol
   try {
