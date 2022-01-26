@@ -1,5 +1,4 @@
-const express = require('express')
-const res = require('express/lib/response')
+const express = require('express') 
 
 const app = express()
 
@@ -9,4 +8,4 @@ app.get('/', (req, res) => {
 }
 )
 
-app.listen(5000,()=> console.log("Hello"))
+app.listen(process.env.PORT || 5000,()=> console.log("Hello"))
