@@ -6,14 +6,9 @@ const cors = require('cors')
 const app = express()
 app.use(express.static(path.join(__dirname, './')));
 
-// app.use(cors());
-
-// app.use(function(req, res, next) {
-//    res.header("Access-Control-Allow-Origin", "*");
-//    res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST');
-//    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//    next();
-// });
+app.use(cors({
+  origin: '*'
+}));
 
 AWS.config.update({ region: 'us-east-1' });
  
@@ -193,7 +188,7 @@ const sortArray = (tickers) => {
 
 
 
-app.get('/',cors(), (req, res) => {
+app.get('/', (req, res) => {
   let data = []
   for (i = 0; i == 30; i++) {
     data.push(allTickers[i])
@@ -201,17 +196,17 @@ app.get('/',cors(), (req, res) => {
   res.send(data)
 })
 
-app.get('/alltickersort',cors(), async (req, res) => {
+app.get('/alltickersort', async (req, res) => {
   res.json(sortedData)
 })
 
-app.get('/tickers_page/:id',cors(), (req, res) => {
+app.get('/tickers_page/:id', (req, res) => {
   let Id = req.params.id - 1
   res.json([pagination[Id],{itemLength:sortedData.length}])
 
 })
 
-app.get('/sectors/:name',cors(),(req,res)=>{
+app.get('/sectors/:name',(req,res)=>{
    let name = req.params.name
    let pageNo = req.query.pageNo - 1
    let data= sectorsFilteredData.filter(item=> {
@@ -230,7 +225,7 @@ app.get('/sectors/:name',cors(),(req,res)=>{
      res.json([resp,{itemLength:length}])
    }  
 })
-app.get('/countries/:name',cors(),(req,res)=>{
+app.get('/countries/:name',(req,res)=>{
    let name = req.params.name
   let pageNo = req.query.pageNo - 1
   let data= countryFilteredData.filter(item=> {
@@ -249,7 +244,7 @@ app.get('/countries/:name',cors(),(req,res)=>{
     res.json([resp,{itemLength:length}])
   }  
 })
-app.get('/industries/:name',cors(),(req,res)=>{
+app.get('/industries/:name',(req,res)=>{
   let name = req.params.name
    let pageNo = req.query.pageNo - 1
   let data= industryFilteredData.filter(item=> {
@@ -283,7 +278,7 @@ const getDataById = async(id, TABLE_NAME)=>{
     return data
 }
 
-app.get('/companydetails/:symbol',cors(),async(req,res)=>{
+app.get('/companydetails/:symbol',async(req,res)=>{
   const PROFILE_TABLENAME = "CompanyProfile"
   const SHARES_TABLENAME = "SharesFloat"
   const FINANCIALRATIO_TABLENAME = "FinancialRatiosTTM"
@@ -311,7 +306,7 @@ app.get('/companydetails/:symbol',cors(),async(req,res)=>{
   }
 }) 
 
-app.get('/competitors/:symbol',cors(), async (req, res) => {
+app.get('/competitors/:symbol', async (req, res) => {
   const TABLE_NAME = "Peers"
   const id = req.params.symbol
   try {
