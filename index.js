@@ -2,33 +2,39 @@ const AWS = require('aws-sdk')
 require('dotenv').config()
 const express = require('express')
 var path = require("path");
-const cors = require('cors')
+// const cors = require('cors')
 const app = express()
-app.use(express.static(path.join(__dirname, './')));
+const fastify = require('fastify')()
+
+
+fastify.register(require('fastify-cors'), { 
+  // put your options here
+  origin: "*"
+})
 
 // app.use(cors({
 //   origin: '*'
 // }));
 
 // Add headers before the routes are defined
-app.use(function (req, res, next) {
+// app.use(function (req, res) {
 
-  // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', 'https://designinguru.com');
+//   // Website you wish to allow to connect
+//   res.setHeader('Access-Control-Allow-Origin', 'https://designinguru.com');
 
-  // Request methods you wish to allow
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+//   // Request methods you wish to allow
+//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
-  // Request headers you wish to allow
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+//   // Request headers you wish to allow
+//   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
 
-  // Set to true if you need the website to include cookies in the requests sent
-  // to the API (e.g. in case you use sessions)
-  res.setHeader('Access-Control-Allow-Credentials', true);
+//   // Set to true if you need the website to include cookies in the requests sent
+//   // to the API (e.g. in case you use sessions)
+//   res.setHeader('Access-Control-Allow-Credentials', true);
 
-  // Pass to next layer of middleware
-  next();
-});
+//   // Pass to next layer of middleware
+//   
+// });
 
 AWS.config.update({ region: 'us-east-1' });
  
@@ -208,7 +214,7 @@ const sortArray = (tickers) => {
 
 
 
-app.get('/', (req, res) => {
+fastify.get('/', (req, res) => {
   let data = []
   for (i = 0; i == 30; i++) {
     data.push(allTickers[i])
@@ -216,22 +222,20 @@ app.get('/', (req, res) => {
   res.send(data)
 })
 
-app.get('/alltickersort', async (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', "*");
-  res.header('Access-Control-Allow-Methods', 'GET');
+fastify.get('/alltickersort', async (req, res) => {
+  
   res.json(sortedData)
-  next();
+  
 })
 
-app.get('/tickers_page/:id', (req, res, next) => {
+fastify.get('/tickers_page/:id', (req, res) => {
   let Id = req.params.id - 1
   res.json([pagination[Id],{itemLength:sortedData.length}])
-  res.header('Access-Control-Allow-Origin', "*");
-  res.header('Access-Control-Allow-Methods', 'GET');
-  next();
+  
+  
 })
 
-app.get('/sectors/:name',(req,res, next)=>{
+fastify.get('/sectors/:name',(req,res)=>{
    let name = req.params.name
    let pageNo = req.query.pageNo - 1
    let data= sectorsFilteredData.filter(item=> {
@@ -251,9 +255,9 @@ app.get('/sectors/:name',(req,res, next)=>{
    }  
    res.header('Access-Control-Allow-Origin', "*");
    res.header('Access-Control-Allow-Methods', 'GET');
-   next();
+   
 })
-app.get('/countries/:name',(req,res, next)=>{
+fastify.get('/countries/:name',(req,res)=>{
    let name = req.params.name
   let pageNo = req.query.pageNo - 1
   let data= countryFilteredData.filter(item=> {
@@ -270,11 +274,10 @@ app.get('/countries/:name',(req,res, next)=>{
     let resp= response[0].items
     let length= response[0].itemsLength
     res.json([resp,{itemLength:length}])
-  }  res.header('Access-Control-Allow-Origin', "*");
-  res.header('Access-Control-Allow-Methods', 'GET');
-  next();
+  }  
+  
 })
-app.get('/industries/:name',(req,res, next)=>{
+fastify.get('/industries/:name',(req,res)=>{
   let name = req.params.name
    let pageNo = req.query.pageNo - 1
   let data= industryFilteredData.filter(item=> {
@@ -294,7 +297,7 @@ app.get('/industries/:name',(req,res, next)=>{
   }  
   res.header('Access-Control-Allow-Origin', "*");
    res.header('Access-Control-Allow-Methods', 'GET');
-   next();
+   
 })
  
 
@@ -310,7 +313,7 @@ const getDataById = async(id, TABLE_NAME)=>{
     return data
 }
 
-app.get('/companydetails/:symbol',async(req,res, next)=>{
+fastify.get('/companydetails/:symbol',async(req,res)=>{
   const PROFILE_TABLENAME = "CompanyProfile"
   const SHARES_TABLENAME = "SharesFloat"
   const FINANCIALRATIO_TABLENAME = "FinancialRatiosTTM"
@@ -338,10 +341,10 @@ app.get('/companydetails/:symbol',async(req,res, next)=>{
   }
   res.header('Access-Control-Allow-Origin', "*");
    res.header('Access-Control-Allow-Methods', 'GET');
-   next();
+   
 }) 
 
-app.get('/competitors/:symbol', async (req, res, next) => {
+fastify.get('/competitors/:symbol', async (req, res) => {
   const TABLE_NAME = "Peers"
   const id = req.params.symbol
   try {
@@ -367,7 +370,7 @@ app.get('/competitors/:symbol', async (req, res, next) => {
   }
   res.header('Access-Control-Allow-Origin', "*");
    res.header('Access-Control-Allow-Methods', 'GET');
-   next();
+   
 })
  
 const port = process.env.PORT || 3000
