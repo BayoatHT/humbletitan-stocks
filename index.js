@@ -7,7 +7,7 @@ app.use(express.static(path.join(__dirname, './')));
 
 
 
-AWS.config.update({ region: 'us-east-1' });
+AWS.config.update({ accessKeyId: process.env.AWS_SECRET_KEY_ID ,secretAccessKey:process.env.AWS_SECRET_ACCESS_KEY,region: 'us-east-1' });
 const dynamoClient = new AWS.DynamoDB.DocumentClient();
 app.get('/',(req,res)=>{
   res.send("Guddi MC")
