@@ -50,7 +50,7 @@ app.get('/companydetails/:symbol',async(req,res)=>{
     res.json({companyProfile, companyShares, comapnyFinancialRatio, comapnyKeymetrics, comapnyRating, comapnyRealTimeQuote, comapnyFinancialGrowth})
   } catch (error) {
     console.error(error)
-    res.status(500).json({ err: 'Something went wrong' })
+    res.status(500).json({ err: error })
     return;
   }
 })
