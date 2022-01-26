@@ -6,11 +6,6 @@ const cors = require('cors')
 const app = express()
 app.use(express.static(path.join(__dirname, './')));
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
 app.use(cors())
 
 
@@ -192,7 +187,7 @@ const sortArray = (tickers) => {
 
 
 
-app.get('/', (req, res) => {
+app.get('/', (req, res,next) => {
   let data = []
   for (i = 0; i == 30; i++) {
     data.push(allTickers[i])
@@ -200,11 +195,11 @@ app.get('/', (req, res) => {
   res.send(data)
 })
 
-app.get('/alltickersort', async (req, res) => {
+app.get('/alltickersort', async (req, res,next) => {
   res.json(sortedData)
 })
 
-app.get('/tickers_page/:id', (req, res) => {
+app.get('/tickers_page/:id', (req, res,next) => {
   let Id = req.params.id - 1
   res.json([pagination[Id],{itemLength:sortedData.length}])
 
@@ -310,7 +305,7 @@ app.get('/companydetails/:symbol',async(req,res)=>{
   }
 }) 
 
-app.get('/competitors/:symbol', async (req, res) => {
+app.get('/competitors/:symbol', async (req, res,next) => {
   const TABLE_NAME = "Peers"
   const id = req.params.symbol
   try {
