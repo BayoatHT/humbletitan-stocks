@@ -197,13 +197,16 @@ app.get('/', (req, res) => {
 })
 
 app.get('/alltickersort', async (req, res) => {
+  res.header('Access-Control-Allow-Origin', "*");
+   res.header('Access-Control-Allow-Methods', 'GET');
   res.json(sortedData)
 })
 
 app.get('/tickers_page/:id', (req, res) => {
   let Id = req.params.id - 1
   res.json([pagination[Id],{itemLength:sortedData.length}])
-
+  res.header('Access-Control-Allow-Origin', "*");
+  res.header('Access-Control-Allow-Methods', 'GET');
 })
 
 app.get('/sectors/:name',(req,res)=>{
@@ -224,6 +227,8 @@ app.get('/sectors/:name',(req,res)=>{
      let length= response[0].itemsLength
      res.json([resp,{itemLength:length}])
    }  
+   res.header('Access-Control-Allow-Origin', "*");
+   res.header('Access-Control-Allow-Methods', 'GET');
 })
 app.get('/countries/:name',(req,res)=>{
    let name = req.params.name
@@ -242,7 +247,8 @@ app.get('/countries/:name',(req,res)=>{
     let resp= response[0].items
     let length= response[0].itemsLength
     res.json([resp,{itemLength:length}])
-  }  
+  }  res.header('Access-Control-Allow-Origin', "*");
+  res.header('Access-Control-Allow-Methods', 'GET');
 })
 app.get('/industries/:name',(req,res)=>{
   let name = req.params.name
@@ -262,7 +268,8 @@ app.get('/industries/:name',(req,res)=>{
     let length= response[0].itemsLength
     res.json([resp,{itemLength:length}])
   }  
-  
+  res.header('Access-Control-Allow-Origin', "*");
+   res.header('Access-Control-Allow-Methods', 'GET');
 })
  
 
@@ -304,6 +311,8 @@ app.get('/companydetails/:symbol',async(req,res)=>{
     res.status(500).json({ err: 'Something went wrong' })
     return;
   }
+  res.header('Access-Control-Allow-Origin', "*");
+   res.header('Access-Control-Allow-Methods', 'GET');
 }) 
 
 app.get('/competitors/:symbol', async (req, res) => {
@@ -330,6 +339,8 @@ app.get('/competitors/:symbol', async (req, res) => {
     console.error(error)
     res.status(500).json({ err: 'Something went wrong' })
   }
+  res.header('Access-Control-Allow-Origin', "*");
+   res.header('Access-Control-Allow-Methods', 'GET');
 })
  
 const port = process.env.PORT || 3000
