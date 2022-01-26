@@ -2,9 +2,10 @@ const AWS = require('aws-sdk')
 require('dotenv').config()
 const express = require('express')
 var path = require("path");
+const cors = require('cors')
 const app = express()
 app.use(express.static(path.join(__dirname, './')));
-
+app.use(cors)
 
 
 AWS.config.update({ region: 'us-east-1' });
