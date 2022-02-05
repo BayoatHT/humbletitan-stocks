@@ -223,97 +223,239 @@ app.get('/alltickersort', async (req, res) => {
 app.get('/getEqualTo/:routeName',(req,res)=>{
     let {routeName} =req.params
     const {label,value}=req.query
-    axios.get(`https://humbletitanapi.herokuapp.com/${routeName}`)
-    .then(response=> res.json(getDataEqualTo(response)))
-    .catch(madarchod=>console.log(madarchod.message)) 
-    const getDataEqualTo=(response)=>{
-       const filtered= []
-        response.data.map(item=>{  
-            item.Info[label]  == value &&  filtered.push(item)  
-        })
-        return filtered
-    } 
+    const filtered= []
+    switch (routeName) {
+      case "allSharesFloat":
+        
+       allSharesFloat.data.map(item=>{  
+        item.Info[label]  == value &&  filtered.push(item)  
+    })
+        break;
+      case "allFinancialRatios":
+        allFinancialRatios.data.map(item=>{  
+        item.Info[label]  == value &&  filtered.push(item)  
+    })
+        break;
+      case "allKeyMetrics":
+        allKeyMetrics.data.map(item=>{  
+        item.Info[label]  == value &&  filtered.push(item)  
+    })
+        break;
+      case "allRatings":
+        allRatings.data.map(item=>{  
+        item.Info[label]  == value &&  filtered.push(item)  
+    })
+        break;
+      case "allRealTimeQuotes":
+        allRealTimeQuotes.data.map(item=>{  
+        item.Info[label]  == value &&  filtered.push(item)  
+    })
+        break;
+      case "allFinancialGrowth":
+        allFinancialGrowth.data.map(item=>{  
+        item.Info[label]  == value &&  filtered.push(item)  
+    })
+        break;
+     
+    }
+       
+        res.json( filtered)
+   
 
 })
 app.get('/getLessThan/:routeName',(req,res)=>{
     let {routeName} =req.params
     const {label,value}=req.query
-    axios.get(`https://humbletitanapi.herokuapp.com/${routeName}`)
-    .then(response=> res.json(getLessThan(response)))
-    .catch(madarchod=>console.log(madarchod.message)) 
-    const getLessThan=(response)=>{
-       const filtered= []
-        response.data.map(item=>{ 
-            let valueSearched =  +value;
-            let valueOfItem = +item.Info[label]
-            valueOfItem  < valueSearched &&  filtered.push(item)  
-        })
-        return filtered
-    } 
+     
+
+    const filtered= []
+    switch (routeName) {
+      case "allSharesFloat":
+        
+        allSharesFloat.data.map(item=>{ 
+          let valueSearched =  +value;
+          let valueOfItem = +item.Info[label]
+          valueOfItem  < valueSearched &&  filtered.push(item)  
+      })  
+        break;
+      case "allFinancialRatios":
+        allFinancialRatios.data.map(item=>{ 
+          let valueSearched =  +value;
+          let valueOfItem = +item.Info[label]
+          valueOfItem  < valueSearched &&  filtered.push(item)  
+      })   
+        break;
+      case "allKeyMetrics":
+        allKeyMetrics.data.map(item=>{ 
+          let valueSearched =  +value;
+          let valueOfItem = +item.Info[label]
+          valueOfItem  < valueSearched &&  filtered.push(item)  
+      })     
+        break;
+      case "allRatings":
+        allRatings.data.map(item=>{ 
+          let valueSearched =  +value;
+          let valueOfItem = +item.Info[label]
+          valueOfItem  < valueSearched &&  filtered.push(item)  
+      })   
+        break;
+      case "allRealTimeQuotes":
+        allRealTimeQuotes.data.map(item=>{ 
+          let valueSearched =  +value;
+          let valueOfItem = +item.Info[label]
+          valueOfItem  < valueSearched &&  filtered.push(item)  
+      })    
+        break;
+      case "allFinancialGrowth":
+        allFinancialGrowth.data.map(item=>{ 
+          let valueSearched =  +value;
+          let valueOfItem = +item.Info[label]
+          valueOfItem  < valueSearched &&  filtered.push(item)  
+      })    
+        break;
+     
+    }
+       
+        res.json( filtered)
 
 })
 app.get('/getGreaterThan/:routeName',(req,res)=>{
     let {routeName} =req.params
     const {label,value}=req.query
-    axios.get(`https://humbletitanapi.herokuapp.com/${routeName}`)
-    .then(response=> res.json(getGreaterThan(response)))
-    .catch(madarchod=>console.log(madarchod.message)) 
-    const getGreaterThan=(response)=>{
-       const filtered= []
-        response.data.map(item=>{ 
-            let valueSearched =  +value;
-            let valueOfItem = +item.Info[label]
-            valueOfItem  > valueSearched &&  filtered.push(item) 
-        })
-        return filtered
-    } 
+    const filtered= []
+    switch (routeName) {
+      case "allSharesFloat":
+        
+        allSharesFloat.data.map(item=>{ 
+          let valueSearched =  +value;
+          let valueOfItem = +item.Info[label]
+          valueOfItem  < valueSearched &&  filtered.push(item)  
+      })  
+        break;
+      case "allFinancialRatios":
+        allFinancialRatios.data.map(item=>{ 
+          let valueSearched =  +value;
+          let valueOfItem = +item.Info[label]
+          valueOfItem  < valueSearched &&  filtered.push(item)  
+      })   
+        break;
+      case "allKeyMetrics":
+        allKeyMetrics.data.map(item=>{ 
+          let valueSearched =  +value;
+          let valueOfItem = +item.Info[label]
+          valueOfItem  < valueSearched &&  filtered.push(item)  
+      })     
+        break;
+      case "allRatings":
+        allRatings.data.map(item=>{ 
+          let valueSearched =  +value;
+          let valueOfItem = +item.Info[label]
+          valueOfItem  < valueSearched &&  filtered.push(item)  
+      })   
+        break;
+      case "allRealTimeQuotes":
+        allRealTimeQuotes.data.map(item=>{ 
+          let valueSearched =  +value;
+          let valueOfItem = +item.Info[label]
+          valueOfItem  < valueSearched &&  filtered.push(item)  
+      })    
+        break;
+      case "allFinancialGrowth":
+        allFinancialGrowth.data.map(item=>{ 
+          let valueSearched =  +value;
+          let valueOfItem = +item.Info[label]
+          valueOfItem  < valueSearched &&  filtered.push(item)  
+      })    
+        break;
+     
+    }
+       
+        res.json( filtered)
 
 })
 app.get('/getStartingWith/:routeName',(req,res)=>{
     let {routeName} =req.params
     const {label,value}=req.query
-    axios.get(`https://humbletitanapi.herokuapp.com/${routeName}`)
-    .then(response=> res.json(getStartingWith(response)))
-    .catch(madarchod=>console.log(madarchod.message)) 
-    const getStartingWith=(response)=>{
-       const filtered= []
-        response.data.map(item=>{ 
-            
-            item.Info[label][0] === value && filtered.push(item) 
-        })
-        return filtered
-    } 
+    
+    const filtered= []
+    switch (routeName) {
+      case "allSharesFloat":
+        
+        allSharesFloat.data.map(item=>{ 
+         item.Info[label][0] === value && filtered.push(item) 
+      })  
+        break;
+      case "allFinancialRatios":
+        allFinancialRatios.data.map(item=>{ 
+         item.Info[label][0] === value && filtered.push(item) 
+      })   
+        break;
+      case "allKeyMetrics":
+        allKeyMetrics.data.map(item=>{ 
+         item.Info[label][0] === value && filtered.push(item) 
+      })     
+        break;
+      case "allRatings":
+        allRatings.data.map(item=>{ 
+         item.Info[label][0] === value && filtered.push(item) 
+      })   
+        break;
+      case "allRealTimeQuotes":
+        allRealTimeQuotes.data.map(item=>{ 
+         item.Info[label][0] === value && filtered.push(item) 
+      })    
+        break;
+      case "allFinancialGrowth":
+        allFinancialGrowth.data.map(item=>{ 
+         item.Info[label][0] === value && filtered.push(item) 
+      })    
+        break;
+     
+    }
+       
+        res.json( filtered)
 
-})
-app.get('/getStartingWith/:routeName',(req,res)=>{
-    let {routeName} =req.params
-    const {label,value}=req.query
-    axios.get(`https://humbletitanapi.herokuapp.com/${routeName}`)
-    .then(response=> res.json(getStartingWith(response)))
-    .catch(madarchod=>console.log(madarchod.message)) 
-    const getStartingWith=(response)=>{
-       const filtered= []
-        response.data.map(item=>{ 
-            
-            item.Info[label][0] === value && filtered.push(item) 
-        })
-        return filtered
-    } 
-
-})
+}) 
 app.get('/getEndingWith/:routeName',(req,res)=>{
     let {routeName} =req.params
-    const {label,value}=req.query
-    axios.get(`https://humbletitanapi.herokuapp.com/${routeName}`)
-    .then(response=> res.json(getStartingWith(response)))
-    .catch(madarchod=>console.log(madarchod.message)) 
-    const getStartingWith=(response)=>{
-       const filtered= []
-        response.data.map(item=>{ 
-             item.Info[label][item.Info[label].length -1] === value && filtered.push(item)
-        })
-        return filtered
-    } 
+    const {label,value}=req.query 
+    const filtered= []
+    switch (routeName) {
+      case "allSharesFloat":
+        
+        allSharesFloat.data.map(item=>{ 
+           item.Info[label][item.Info[label].length -1] === value && filtered.push(item)
+      })  
+        break;
+      case "allFinancialRatios":
+        allFinancialRatios.data.map(item=>{ 
+           item.Info[label][item.Info[label].length -1] === value && filtered.push(item)
+      })   
+        break;
+      case "allKeyMetrics":
+        allKeyMetrics.data.map(item=>{ 
+           item.Info[label][item.Info[label].length -1] === value && filtered.push(item)
+      })     
+        break;
+      case "allRatings":
+        allRatings.data.map(item=>{ 
+           item.Info[label][item.Info[label].length -1] === value && filtered.push(item)
+      })   
+        break;
+      case "allRealTimeQuotes":
+        allRealTimeQuotes.data.map(item=>{ 
+           item.Info[label][item.Info[label].length -1] === value && filtered.push(item)
+      })    
+        break;
+      case "allFinancialGrowth":
+        allFinancialGrowth.data.map(item=>{ 
+           item.Info[label][item.Info[label].length -1] === value && filtered.push(item)
+      })    
+        break;
+     
+    }
+       
+        res.json( filtered)
 
 })
 app.get('/allSharesFloat', async (req, res) => {
