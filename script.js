@@ -5,26 +5,21 @@ const { response } = require('express');
 const app = express()
 
 app.get('/filtered',(req,res)=>{
-    // const {label,value} = req.query 
-    // axios.get('https://humbletitanapi.herokuapp.com/alltickersort')
-    // .then(response=> res.json(getDataEqualTo(response)))
-    // .catch(madarchod=>console.log(madarchod.message)) 
-    // const getDataEqualTo=(response)=>{
-    //    const filtered= []
-    //     response.data.map(item=>{ 
-    //         item.Info[label]  > value && filtered.push(item)
-    //     })
-    //     return filtered
-    // } 
-    const myArray =[]
+    const {label,value} = req.query 
     axios.get('https://humbletitanapi.herokuapp.com/alltickersort')
-    .then(response=> res.json(getDataEqualTo(myArray)))
+    .then(response=> res.json(getDataEqualTo(response)))
     .catch(madarchod=>console.log(madarchod.message)) 
-    const getDataEqualTo=(arrayName)=>{
-        arrayName.push("chutiya")
-        return arrayName
-    }
- 
+    const getDataEqualTo=(response)=>{
+       const filtered= []
+        response.data.map(item=>{ 
+            // let valueSearched =  +value;
+            // let valueOfItem = +item.Info[label]
+            // valueOfItem   < valueSearched &&  filtered.push(item) 
+            item.Info[label][item.Info[label].length -1] === value && filtered.push(item)
+        })
+        return filtered
+    } 
+    
     
 })
 
