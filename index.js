@@ -227,32 +227,32 @@ app.get('/getEqualTo/:routeName',(req,res)=>{
     switch (routeName) {
       case "allSharesFloat":
         
-       allSharesFloat.data.map(item=>{  
+       allSharesFloat.map(item=>{  
         item.Info[label]  == value &&  filtered.push(item)  
     })
         break;
       case "allFinancialRatios":
-        allFinancialRatios.data.map(item=>{  
+        allFinancialRatios.map(item=>{  
         item.Info[label]  == value &&  filtered.push(item)  
     })
         break;
       case "allKeyMetrics":
-        allKeyMetrics.data.map(item=>{  
+        allKeyMetrics.map(item=>{  
         item.Info[label]  == value &&  filtered.push(item)  
     })
         break;
       case "allRatings":
-        allRatings.data.map(item=>{  
+        allRatings.map(item=>{  
         item.Info[label]  == value &&  filtered.push(item)  
     })
         break;
       case "allRealTimeQuotes":
-        allRealTimeQuotes.data.map(item=>{  
+        allRealTimeQuotes.map(item=>{  
         item.Info[label]  == value &&  filtered.push(item)  
     })
         break;
       case "allFinancialGrowth":
-        allFinancialGrowth.data.map(item=>{  
+        allFinancialGrowth.map(item=>{  
         item.Info[label]  == value &&  filtered.push(item)  
     })
         break;
@@ -272,42 +272,42 @@ app.get('/getLessThan/:routeName',(req,res)=>{
     switch (routeName) {
       case "allSharesFloat":
         
-        allSharesFloat.data.map(item=>{ 
+        allSharesFloat.map(item=>{ 
           let valueSearched =  +value;
           let valueOfItem = +item.Info[label]
           valueOfItem  < valueSearched &&  filtered.push(item)  
       })  
         break;
       case "allFinancialRatios":
-        allFinancialRatios.data.map(item=>{ 
+        allFinancialRatios.map(item=>{ 
           let valueSearched =  +value;
           let valueOfItem = +item.Info[label]
           valueOfItem  < valueSearched &&  filtered.push(item)  
       })   
         break;
       case "allKeyMetrics":
-        allKeyMetrics.data.map(item=>{ 
+        allKeyMetrics.map(item=>{ 
           let valueSearched =  +value;
           let valueOfItem = +item.Info[label]
           valueOfItem  < valueSearched &&  filtered.push(item)  
       })     
         break;
       case "allRatings":
-        allRatings.data.map(item=>{ 
+        allRatings.map(item=>{ 
           let valueSearched =  +value;
           let valueOfItem = +item.Info[label]
           valueOfItem  < valueSearched &&  filtered.push(item)  
       })   
         break;
       case "allRealTimeQuotes":
-        allRealTimeQuotes.data.map(item=>{ 
+        allRealTimeQuotes.map(item=>{ 
           let valueSearched =  +value;
           let valueOfItem = +item.Info[label]
           valueOfItem  < valueSearched &&  filtered.push(item)  
       })    
         break;
       case "allFinancialGrowth":
-        allFinancialGrowth.data.map(item=>{ 
+        allFinancialGrowth.map(item=>{ 
           let valueSearched =  +value;
           let valueOfItem = +item.Info[label]
           valueOfItem  < valueSearched &&  filtered.push(item)  
@@ -316,7 +316,7 @@ app.get('/getLessThan/:routeName',(req,res)=>{
      
     }
        
-        res.json( routeName)
+        res.json( filtered)
 
 })
 app.get('/getGreaterThan/:routeName',(req,res)=>{
@@ -326,42 +326,42 @@ app.get('/getGreaterThan/:routeName',(req,res)=>{
     switch (routeName) {
       case "allSharesFloat":
         
-        allSharesFloat.data.map(item=>{ 
+        allSharesFloat.map(item=>{ 
           let valueSearched =  +value;
           let valueOfItem = +item.Info[label]
           valueOfItem  < valueSearched &&  filtered.push(item)  
       })  
         break;
       case "allFinancialRatios":
-        allFinancialRatios.data.map(item=>{ 
+        allFinancialRatios.map(item=>{ 
           let valueSearched =  +value;
           let valueOfItem = +item.Info[label]
           valueOfItem  < valueSearched &&  filtered.push(item)  
       })   
         break;
       case "allKeyMetrics":
-        allKeyMetrics.data.map(item=>{ 
+        allKeyMetrics.map(item=>{ 
           let valueSearched =  +value;
           let valueOfItem = +item.Info[label]
           valueOfItem  < valueSearched &&  filtered.push(item)  
       })     
         break;
       case "allRatings":
-        allRatings.data.map(item=>{ 
+        allRatings.map(item=>{ 
           let valueSearched =  +value;
           let valueOfItem = +item.Info[label]
           valueOfItem  < valueSearched &&  filtered.push(item)  
       })   
         break;
       case "allRealTimeQuotes":
-        allRealTimeQuotes.data.map(item=>{ 
+        allRealTimeQuotes.map(item=>{ 
           let valueSearched =  +value;
           let valueOfItem = +item.Info[label]
           valueOfItem  < valueSearched &&  filtered.push(item)  
       })    
         break;
       case "allFinancialGrowth":
-        allFinancialGrowth.data.map(item=>{ 
+        allFinancialGrowth.map(item=>{ 
           let valueSearched =  +value;
           let valueOfItem = +item.Info[label]
           valueOfItem  < valueSearched &&  filtered.push(item)  
@@ -381,32 +381,32 @@ app.get('/getStartingWith/:routeName',(req,res)=>{
     switch (routeName) {
       case "allSharesFloat":
         
-        allSharesFloat.data.map(item=>{ 
+        allSharesFloat.map(item=>{ 
          item.Info[label][0] === value && filtered.push(item) 
       })  
         break;
       case "allFinancialRatios":
-        allFinancialRatios.data.map(item=>{ 
+        allFinancialRatios.map(item=>{ 
          item.Info[label][0] === value && filtered.push(item) 
       })   
         break;
       case "allKeyMetrics":
-        allKeyMetrics.data.map(item=>{ 
+        allKeyMetrics.map(item=>{ 
          item.Info[label][0] === value && filtered.push(item) 
       })     
         break;
       case "allRatings":
-        allRatings.data.map(item=>{ 
+        allRatings.map(item=>{ 
          item.Info[label][0] === value && filtered.push(item) 
       })   
         break;
       case "allRealTimeQuotes":
-        allRealTimeQuotes.data.map(item=>{ 
+        allRealTimeQuotes.map(item=>{ 
          item.Info[label][0] === value && filtered.push(item) 
       })    
         break;
       case "allFinancialGrowth":
-        allFinancialGrowth.data.map(item=>{ 
+        allFinancialGrowth.map(item=>{ 
          item.Info[label][0] === value && filtered.push(item) 
       })    
         break;
@@ -423,32 +423,32 @@ app.get('/getEndingWith/:routeName',(req,res)=>{
     switch (routeName) {
       case "allSharesFloat":
         
-        allSharesFloat.data.map(item=>{ 
+        allSharesFloat.map(item=>{ 
            item.Info[label][item.Info[label].length -1] === value && filtered.push(item)
       })  
         break;
       case "allFinancialRatios":
-        allFinancialRatios.data.map(item=>{ 
+        allFinancialRatios.map(item=>{ 
            item.Info[label][item.Info[label].length -1] === value && filtered.push(item)
       })   
         break;
       case "allKeyMetrics":
-        allKeyMetrics.data.map(item=>{ 
+        allKeyMetrics.map(item=>{ 
            item.Info[label][item.Info[label].length -1] === value && filtered.push(item)
       })     
         break;
       case "allRatings":
-        allRatings.data.map(item=>{ 
+        allRatings.map(item=>{ 
            item.Info[label][item.Info[label].length -1] === value && filtered.push(item)
       })   
         break;
       case "allRealTimeQuotes":
-        allRealTimeQuotes.data.map(item=>{ 
+        allRealTimeQuotes.map(item=>{ 
            item.Info[label][item.Info[label].length -1] === value && filtered.push(item)
       })    
         break;
       case "allFinancialGrowth":
-        allFinancialGrowth.data.map(item=>{ 
+        allFinancialGrowth.map(item=>{ 
            item.Info[label][item.Info[label].length -1] === value && filtered.push(item)
       })    
         break;
