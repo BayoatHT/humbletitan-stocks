@@ -15,8 +15,16 @@ AWS.config.update({ region: 'us-east-1' });
  
 
 const dynamoClient = new AWS.DynamoDB.DocumentClient();
-let allTickers = []
-const getData = async (TABLE_NAME, lastKey) => {
+const  allTickers = []
+const  allSharesFloat = []
+const  allFinancialRatios = []
+const  allKeyMetrics = []
+const  allRatings = []
+const  allRealTimeQuotes = []
+const  allFinancialGrowth = []
+
+
+const getData = async (TABLE_NAME, arrayName) => {
   const params = {
     TableName: TABLE_NAME, 
 
@@ -37,16 +45,25 @@ const getData = async (TABLE_NAME, lastKey) => {
         params.ExclusiveStartKey = data.LastEvaluatedKey;
         dynamoClient.scan(params, onScan);
       } else {
-        allTickers.push(...data.Items)
-        sortArray(allTickers)
+        arrayName.push(...data.Items)
+        if(TABLE_NAME ==="CompanyProfile"){
+          sortArray(arrayName)
+        }
 
       }
     } 
-    allTickers.push(...data.Items)
+    arrayName.push(...data.Items)
     // console.log(allTickers.length)
   }
 }
-getData('CompanyProfile').then(aja => console.log(""))
+ 
+getData('CompanyProfile',allTickers).then(aja => console.log(""))
+getData('SharesFloat',allSharesFloat).then(aja => console.log(""))
+getData('FinancialRatiosTTM',allFinancialRatios).then(aja => console.log(""))
+getData('KeyMetricsTTM',allKeyMetrics).then(aja => console.log(""))
+getData('Ratings',allRatings).then(aja => console.log(""))
+getData('RealTimeQuotes',allRealTimeQuotes).then(aja => console.log(""))
+getData('CompanyProfile',allFinancialGrowth).then(aja => console.log("")) 
 
 let sortedData = []
 let pagination = [] 
@@ -201,6 +218,36 @@ app.get('/alltickersort', async (req, res) => {
   res.header('Access-Control-Allow-Origin', "*");
    res.header('Access-Control-Allow-Methods', 'GET');
   res.json(sortedData)
+})
+app.get('/allSharesFloat', async (req, res) => {
+  res.header('Access-Control-Allow-Origin', "*");
+   res.header('Access-Control-Allow-Methods', 'GET');
+  res.json(allSharesFloat)
+})
+app.get('/allFinancialRatios', async (req, res) => {
+  res.header('Access-Control-Allow-Origin', "*");
+   res.header('Access-Control-Allow-Methods', 'GET');
+  res.json(allFinancialRatios)
+})
+app.get('/allKeyMetrics', async (req, res) => {
+  res.header('Access-Control-Allow-Origin', "*");
+   res.header('Access-Control-Allow-Methods', 'GET');
+  res.json(allKeyMetrics)
+})
+app.get('/allRatings', async (req, res) => {
+  res.header('Access-Control-Allow-Origin', "*");
+   res.header('Access-Control-Allow-Methods', 'GET');
+  res.json(allRatings)
+})
+app.get('/allRealTimeQuotes', async (req, res) => {
+  res.header('Access-Control-Allow-Origin', "*");
+   res.header('Access-Control-Allow-Methods', 'GET');
+  res.json(allRealTimeQuotes)
+})
+app.get('/allFinancialGrowth', async (req, res) => {
+  res.header('Access-Control-Allow-Origin', "*");
+   res.header('Access-Control-Allow-Methods', 'GET');
+  res.json(allFinancialGrowth)
 })
 
 app.get('/tickers_page/:id', (req, res) => {
