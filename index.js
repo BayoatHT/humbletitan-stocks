@@ -316,7 +316,7 @@ app.get('/getLessThan/:routeName',(req,res)=>{
      
     }
        
-        res.json( filtered)
+        res.json( routeName)
 
 })
 app.get('/getGreaterThan/:routeName',(req,res)=>{
