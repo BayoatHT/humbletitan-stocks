@@ -63,7 +63,7 @@ getData('FinancialRatiosTTM',allFinancialRatios).then(aja => console.log(""))
 getData('KeyMetricsTTM',allKeyMetrics).then(aja => console.log(""))
 getData('Ratings',allRatings).then(aja => console.log(""))
 getData('RealTimeQuotes',allRealTimeQuotes).then(aja => console.log(""))
-getData('CompanyProfile',allFinancialGrowth).then(aja => console.log("")) 
+getData('FinancialGrowthANN',allFinancialGrowth).then(aja => console.log("")) 
 
 let sortedData = []
 let pagination = [] 
