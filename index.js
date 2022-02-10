@@ -22,6 +22,7 @@ const  allKeyMetrics = []
 const  allRatings = []
 const  allRealTimeQuotes = []
 const  allFinancialGrowth = []
+const allComapnyProfile =[]
 
 
 const getData = async (TABLE_NAME, arrayName) => {
@@ -232,6 +233,12 @@ app.get('/getEqualTo/:routeName',(req,res)=>{
         item.Info[label]  == value &&  filtered.push(item)  
     })
         break;
+      case "allCompanyProfile":
+        
+       allCompanyProfile.map(item=>{  
+        item.Info[label]  == value &&  filtered.push(item)  
+    })
+        break;
       case "allFinancialRatios":
         allFinancialRatios.map(item=>{  
         item.Info[label]  == value &&  filtered.push(item)  
@@ -271,6 +278,14 @@ app.get('/getLessThan/:routeName',(req,res)=>{
 
     const filtered= []
     switch (routeName) {
+      case "allComapnyProfile":
+        
+        allComapnyProfile.map(item=>{ 
+          let valueSearched =  +value;
+          let valueOfItem = +item.Info[label]
+          valueOfItem  < valueSearched &&  filtered.push(item)  
+      })  
+        break;
       case "allSharesFloat":
         
         allSharesFloat.map(item=>{ 
@@ -325,6 +340,14 @@ app.get('/getGreaterThan/:routeName',(req,res)=>{
     const {label,value}=req.query
     const filtered= []
     switch (routeName) {
+      case "allComapnyProfile":
+        
+        allComapnyProfile.map(item=>{ 
+          let valueSearched =  +value;
+          let valueOfItem = +item.Info[label]
+          valueOfItem  > valueSearched &&  filtered.push(item)  
+      })  
+        break;
       case "allSharesFloat":
         
         allSharesFloat.map(item=>{ 
@@ -380,6 +403,12 @@ app.get('/getStartingWith/:routeName',(req,res)=>{
     
     const filtered= []
     switch (routeName) {
+      case "allComapnyProfile":
+        
+        allComapnyProfile.map(item=>{ 
+         item.Info[label][0] === value && filtered.push(item) 
+      })  
+        break;
       case "allSharesFloat":
         
         allSharesFloat.map(item=>{ 
@@ -422,6 +451,12 @@ app.get('/getEndingWith/:routeName',(req,res)=>{
     const {label,value}=req.query 
     const filtered= []
     switch (routeName) {
+      case "allComapnyProfile":
+        
+        allComapnyProfile.map(item=>{ 
+           item.Info[label][item.Info[label].length -1] === value && filtered.push(item)
+      })  
+        break;
       case "allSharesFloat":
         
         allSharesFloat.map(item=>{ 
