@@ -22,7 +22,7 @@ const  allKeyMetrics = []
 const  allRatings = []
 const  allRealTimeQuotes = []
 const  allFinancialGrowth = []
-const allComapnyProfile =[]
+const allCompanyProfile =[]
 
 
 const getData = async (TABLE_NAME, arrayName) => {
@@ -278,9 +278,9 @@ app.get('/getLessThan/:routeName',(req,res)=>{
 
     const filtered= []
     switch (routeName) {
-      case "allComapnyProfile":
+      case "allCompanyProfile":
         
-        allComapnyProfile.map(item=>{ 
+        allCompanyProfile.map(item=>{ 
           let valueSearched =  +value;
           let valueOfItem = +item.Info[label]
           valueOfItem  < valueSearched &&  filtered.push(item)  
@@ -340,9 +340,9 @@ app.get('/getGreaterThan/:routeName',(req,res)=>{
     const {label,value}=req.query
     const filtered= []
     switch (routeName) {
-      case "allComapnyProfile":
+      case "allCompanyProfile":
         
-        allComapnyProfile.map(item=>{ 
+        allCompanyProfile.map(item=>{ 
           let valueSearched =  +value;
           let valueOfItem = +item.Info[label]
           valueOfItem  > valueSearched &&  filtered.push(item)  
@@ -403,9 +403,9 @@ app.get('/getStartingWith/:routeName',(req,res)=>{
     
     const filtered= []
     switch (routeName) {
-      case "allComapnyProfile":
+      case "allCompanyProfile":
         
-        allComapnyProfile.map(item=>{ 
+        allCompanyProfile.map(item=>{ 
          item.Info[label][0] === value && filtered.push(item) 
       })  
         break;
@@ -451,9 +451,9 @@ app.get('/getEndingWith/:routeName',(req,res)=>{
     const {label,value}=req.query 
     const filtered= []
     switch (routeName) {
-      case "allComapnyProfile":
+      case "allCompanyProfile":
         
-        allComapnyProfile.map(item=>{ 
+        allCompanyProfile.map(item=>{ 
            item.Info[label][item.Info[label].length -1] === value && filtered.push(item)
       })  
         break;
@@ -649,29 +649,29 @@ app.get('/companydetails/:symbol',async(req,res)=>{
 app.get('/competitors/:symbol', async (req, res) => {
   res.header('Access-Control-Allow-Origin', "*");
    res.header('Access-Control-Allow-Methods', 'GET');
-  const TABLE_NAME = "Peers"
+  const Peers_Table = "Peers"
   const id = req.params.symbol
-  try {
-    const profile = await getDataById(id, TABLE_NAME)
-    const competitorsSymbols = profile?.Item?.Info?.Peers
-    let c = []
-    const competitorsNames = async () => Promise.all(competitorsSymbols.map((competitor) => getDataById(competitor, 'CompanyProfile')))
-    competitorsNames()
-      .then(data => {
-        data.map(({ Item: { Info: { companyname } } }) => c.push(companyname))
-      })
-      .then(() => {
-        let b = []
-        c.map((i, index) => {
-          b.push([competitorsSymbols[index], i])
-        })
-        res.json(b)
+  // try {
+  //   const profile = await getDataById(id, Peers_Table)
+  //   const competitorsSymbols = profile?.Item?.Info?.Peers
+  //   let c = []
+  //   const competitorsNames = async () => Promise.all(competitorsSymbols.map((competitor) => getDataById(competitor, 'CompanyProfile')))
+  //   competitorsNames()
+  //     .then(data => {
+  //       data.map(({ Item: { Info: { companyname } } }) => c.push(companyname))
+  //     })
+  //     .then(() => {
+  //       let b = []
+  //       c.map((i, index) => {
+  //         b.push([competitorsSymbols[index], i])
+  //       })
+  //       res.json(b)
 
-      })
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({ err: 'Something went wrong' })
-  }
+  //     })
+  // } catch (error) {
+  //   console.error(error)
+  //   res.status(500).json({ err: 'Something went wrong' })
+  // }
   
 })
  
