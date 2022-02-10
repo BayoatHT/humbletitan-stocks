@@ -64,6 +64,7 @@ getData('KeyMetricsTTM',allKeyMetrics).then(aja => console.log(""))
 getData('Ratings',allRatings).then(aja => console.log(""))
 getData('RealTimeQuotes',allRealTimeQuotes).then(aja => console.log(""))
 getData('FinancialGrowthANN',allFinancialGrowth).then(aja => console.log("")) 
+getData('CompanyProfile',allCompanyProfile).then(aja => console.log("")) 
 
 let sortedData = []
 let pagination = [] 
@@ -329,42 +330,42 @@ app.get('/getGreaterThan/:routeName',(req,res)=>{
         allSharesFloat.map(item=>{ 
           let valueSearched =  +value;
           let valueOfItem = +item.Info[label]
-          valueOfItem  < valueSearched &&  filtered.push(item)  
+          valueOfItem  > valueSearched &&  filtered.push(item)  
       })  
         break;
       case "allFinancialRatios":
         allFinancialRatios.map(item=>{ 
           let valueSearched =  +value;
           let valueOfItem = +item.Info[label]
-          valueOfItem  < valueSearched &&  filtered.push(item)  
+          valueOfItem  > valueSearched &&  filtered.push(item)  
       })   
         break;
       case "allKeyMetrics":
         allKeyMetrics.map(item=>{ 
           let valueSearched =  +value;
           let valueOfItem = +item.Info[label]
-          valueOfItem  < valueSearched &&  filtered.push(item)  
+          valueOfItem  > valueSearched &&  filtered.push(item)  
       })     
         break;
       case "allRatings":
         allRatings.map(item=>{ 
           let valueSearched =  +value;
           let valueOfItem = +item.Info[label]
-          valueOfItem  < valueSearched &&  filtered.push(item)  
+          valueOfItem  > valueSearched &&  filtered.push(item)  
       })   
         break;
       case "allRealTimeQuotes":
         allRealTimeQuotes.map(item=>{ 
           let valueSearched =  +value;
           let valueOfItem = +item.Info[label]
-          valueOfItem  < valueSearched &&  filtered.push(item)  
+          valueOfItem  > valueSearched &&  filtered.push(item)  
       })    
         break;
       case "allFinancialGrowth":
         allFinancialGrowth.map(item=>{ 
           let valueSearched =  +value;
           let valueOfItem = +item.Info[label]
-          valueOfItem  < valueSearched &&  filtered.push(item)  
+          valueOfItem  > valueSearched &&  filtered.push(item)  
       })    
         break;
      
@@ -457,6 +458,11 @@ app.get('/getEndingWith/:routeName',(req,res)=>{
        
         res.json( filtered)
 
+})
+app.get('/allCompanyProfile', async (req, res) => {
+  res.header('Access-Control-Allow-Origin', "*");
+   res.header('Access-Control-Allow-Methods', 'GET');
+  res.json(allCompanyProfile)
 })
 app.get('/allSharesFloat', async (req, res) => {
   res.header('Access-Control-Allow-Origin', "*");

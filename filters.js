@@ -1,5 +1,5 @@
 
-
+const loru =[
 "REVENUEPERSHARETTM",
 "NETINCOMEPERSHARETTM",
 "OPERATINGCASHFLOWPERSHARETTM",
@@ -197,201 +197,454 @@
 "ZIP",
 "DCFDIFF",
 "DCF",
+]
+const gando =[
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"Integer",
+"string",
+"string",
+"integer",
+"integer",
+"integer",
+"string",
+"string",
+"string",
+"string",
+"string",
+"string",
+"string",
+"integer",
+"integer",
+"string",
+"string",
+"string",
+"integer",
+"integer",
+"integer", 
+]
 
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"Integer"
-"string"
-"string"
-"integer"
-"integer"
-"integer"
-"string"
-"string"
-"string"
-"string"
-"string"
-"string"
-"string"
-"integer"
-"integer"
-"string"
-"string"
-"string"
-"integer"
-"integer"
-"integer" 
+ 
+
+const tableNames=[
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Key Metrics TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Financial Ratios TTM",
+    "All Tickers - Real Time Quote",
+    "All Tickers - Real Time Quote",
+    "All Tickers - Real Time Quote",
+    "All Tickers - Real Time Quote",
+    "All Tickers - Real Time Quote",
+    "All Tickers - Real Time Quote",
+    "All Tickers - Real Time Quote",
+    "All Tickers - Real Time Quote",
+    "All Tickers - Real Time Quote",
+    "All Tickers - Real Time Quote",
+    "All Tickers - Real Time Quote",
+    "All Tickers - Real Time Quote",
+    "All Tickers - Real Time Quote",
+    "All Tickers - Real Time Quote",
+    "All Tickers - Real Time Quote",
+    "All Tickers - Real Time Quote",
+    "All Tickers - Real Time Quote",
+    "All Tickers - Real Time Quote",
+    "All Tickers - Real Time Quote",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Financial Growth ANN",
+    "All Tickers - Company Profile",
+    "All Tickers - Company Profile",
+    "All Tickers - Company Profile",
+    "All Tickers - Company Profile",
+    "All Tickers - Company Profile",
+    "All Tickers - Company Profile",
+    "All Tickers - Company Profile",
+    "All Tickers - Company Profile",
+    "All Tickers - Company Profile",
+    "All Tickers - Company Profile",
+    "All Tickers - Company Profile",
+    "All Tickers - Company Profile",
+    "All Tickers - Company Profile",
+    "All Tickers - Company Profile",
+    "All Tickers - Company Profile",
+    "All Tickers - Company Profile",
+    "All Tickers - Company Profile",
+    "All Tickers - Company Profile",
+    "All Tickers - Company Profile",
+    "All Tickers - Company Profile",
+    "All Tickers - Company Profile",
+    "All Tickers - Company Profile",
+    "All Tickers - Company Profile",
+    "All Tickers - Company Profile",
+    "All Tickers - Company Profile",
+    "All Tickers - Company Profile"]
+
+const keyMetricsStringData =[]
+const financialRatiosStringData =[]
+const realTimeQuoteStringData =[]
+const financialGrowthStringData=[]
+const companyProfileStringData=[]
+
+const keyMetricsIntegerData =[]
+const financialRatiosIntegerData =[]
+const realTimeQuoteIntegerData =[]
+const financialGrowthIntegerData=[]
+const companyProfileIntegerData=[]
+
+loru.map((i,index)=>{
+
+    switch (tableNames[index]) {
+        case "All Tickers - Key Metrics TTM":
+            gando[index] === "Integer" ?
+            keyMetricsIntegerData.push({label:i,value:i})
+    :
+    keyMetricsStringData.push({label:i,value:i})
+            break;
+        case "All Tickers - All Tickers - Financial Ratios TTM":
+            gando[index] === "Integer" ?
+            financialRatiosIntegerData.push({label:i,value:i})
+    :
+    financialRatiosStringData.push({label:i,value:i})
+            break;
+        case "All Tickers - Real Time Quote":
+            gando[index] === "Integer" ?
+            realTimeQuoteIntegerData.push({label:i,value:i})
+    :
+    realTimeQuoteStringData.push({label:i,value:i})
+            break;
+        case "All Tickers - Financial Growth ANN":
+            gando[index] === "Integer" ?
+            financialGrowthStringData.push({label:i,value:i})
+    :
+    financialGrowthIntegerData.push({label:i,value:i})
+            break;
+        case "All Tickers - Company Profile":
+            gando[index] === "Integer" ?
+            companyProfileIntegerData.push({label:i,value:i})
+    :
+    companyProfileStringData.push({label:i,value:i})
+            break;
+     
+    }
+ 
+}) 
