@@ -2,7 +2,8 @@ const AWS = require('aws-sdk')
 require('dotenv').config()
 const express = require('express')
 var path = require("path");
-const cors = require('cors')
+const cors = require('cors');
+const { searchFilter } = require('./filtersData');
 const app = express()
 app.use(express.static(path.join(__dirname, './')));
 
@@ -23,6 +24,10 @@ const  allRatings = []
 const  allRealTimeQuotes = []
 const  allFinancialGrowth = []
 const allCompanyProfile =[]
+const topActive =[]
+const topGainers = []
+const topLosers =[]
+
 
 
 const getData = async (TABLE_NAME, arrayName) => {
@@ -66,6 +71,9 @@ getData('Ratings',allRatings).then(aja => console.log(""))
 getData('RealTimeQuotes',allRealTimeQuotes).then(aja => console.log(""))
 getData('FinancialGrowthANN',allFinancialGrowth).then(aja => console.log("")) 
 getData('CompanyProfile',allCompanyProfile).then(aja => console.log("")) 
+getData('TopActive',topActive).then(aja => console.log("")) 
+getData('TopGainers',topGainers).then(aja => console.log("")) 
+getData('TopLosers',topLosers).then(aja => console.log("")) 
 
 let sortedData = []
 let pagination = [] 
@@ -601,6 +609,9 @@ app.get('/industries/:name',(req,res)=>{
   }  
   
 })
+
+
+
  
 
 const getDataById = async(id, TABLE_NAME)=>{
@@ -673,6 +684,20 @@ app.get('/competitors/:symbol', async (req, res) => {
   //   res.status(500).json({ err: 'Something went wrong' })
   // }
   
+})
+app.get('/topgainers',(req,res)=>{
+  res.json(topGainers)
+})
+app.get('/topactive',(req,res)=>{
+  res.json(topActive)
+})
+app.get('/toplosers',(req,res)=>{
+  res.json(topLosers)
+})
+
+app.get('/companynames',async(req,res)=>{
+  let companynames = searchFilter
+  res.json(companynames)
 })
  
 const port = process.env.PORT || 3000
