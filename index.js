@@ -697,7 +697,13 @@ app.get('/toplosers',(req,res)=>{
 
 app.get('/companynames',async(req,res)=>{
   let companynames = searchingFilter()
-  res.json(companynames)
+  let companyname = req.query.companyname
+  if(!companyname){
+    res.json(companynames)
+  }else{
+    const filtered = allTickers.filter(item=>item.Info.companyname === companyname)
+    res.json(filtered)
+  }
 })
  
 const port = process.env.PORT || 3000
