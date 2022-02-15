@@ -3,7 +3,7 @@ require('dotenv').config()
 const express = require('express')
 var path = require("path");
 const cors = require('cors');
-const { searchFilter } = require('./filtersData');
+const {  searchingFilter } = require('./filtersData');
 const app = express()
 app.use(express.static(path.join(__dirname, './')));
 
@@ -696,7 +696,7 @@ app.get('/toplosers',(req,res)=>{
 })
 
 app.get('/companynames',async(req,res)=>{
-  let companynames = searchFilter
+  let companynames = searchingFilter()
   res.json(companynames)
 })
  
