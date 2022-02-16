@@ -714,7 +714,7 @@ app.post('/filteredData',jsonParser,(req,res)=>{
     
   customRoutes.push({data, url: filterlabel+filterCondition+filterValue})
 
-  res.json({url:`https://humbletitanapi.herokuapp.com/filtered-data?filterlabel=${filterlabel}&filterCondition=${filterCondition}&filterValue=${filterValue}`})
+  res.send(`https://humbletitanapi.herokuapp.com/filtered-data?filterlabel=${filterlabel}&filterCondition=${filterCondition}&filterValue=${filterValue}`)
 })
 
 app.get('/filtered-data',(req,res)=>{
