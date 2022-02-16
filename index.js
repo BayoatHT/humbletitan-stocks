@@ -706,13 +706,17 @@ app.post('/filteredData',jsonParser,(req,res)=>{
   let filterCondition = req.query.filterCondition
   let filterValue = req.query.filterValue
   let data ={profile:[],financial:[]}
+  let newData =[]
   req.body.map(i=>{
     allTickers.map(item=> i.Symbol == item.Symbol && data.profile.push(item))
     allFinancialRatios.map(item=>i.Symbol == item.Symbol && data.financial.push(item))
     })
+    data.profile.map(item=>{
+      data.financial.map(i=>item.Symbol=== i.Symbol  && newData.push([i.Info,item.Info])) 
+    })
     
     
-  customRoutes.push({data, url: filterlabel+filterCondition+filterValue})
+  customRoutes.push({data:newData, url: filterlabel+filterCondition+filterValue})
 
   res.send(`https://humbletitanapi.herokuapp.com/filtered-data?filterlabel=${filterlabel}&filterCondition=${filterCondition}&filterValue=${filterValue}`)
 })
