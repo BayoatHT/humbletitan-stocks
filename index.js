@@ -4,6 +4,8 @@ const express = require('express')
 var path = require("path");
 const cors = require('cors');
 const {  searchingFilter } = require('./filtersData');
+const bodyParser = require('body-parser')
+
 const app = express()
 app.use(express.static(path.join(__dirname, './')));
 
@@ -11,6 +13,7 @@ app.use(cors({
   origin: '*'
 }));
 
+const jsonParser = bodyParser.json()
 
 AWS.config.update({ region: 'us-east-1' });
  
@@ -696,6 +699,12 @@ app.get('/companynames',async(req,res)=>{
   }
 })
  
+
+app.post('/custom-pages',jsonParser,(req,res)=>{
+  res.json(req.body)
+})
+
+
 const port = process.env.PORT || 3000
 
 
