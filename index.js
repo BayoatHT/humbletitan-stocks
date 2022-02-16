@@ -282,58 +282,58 @@ app.get('/getEqualTo/:routeName',(req,res)=>{
 app.get('/getLessThan/:routeName',(req,res)=>{
     let {routeName} =req.params
     const {label,value}=req.query
-     
+    let valueSearched =  +value;
+    let valueOfItem ;
 
     const filtered= []
     switch (routeName) {
       case "allCompanyProfile":
-        let valueSearched =  +value;
-        let valueOfItem = +item.Info[label]
+     
         allCompanyProfile.map(item=>{ 
-          
+          valueOfItem = +item.Info[label]
           valueOfItem  < valueSearched &&  valueOfItem != '' && filtered.push(item)  
       })  
         break;
       case "allSharesFloat":
         
         allSharesFloat.map(item=>{ 
-          
+          valueOfItem = +item.Info[label]
           valueOfItem  < valueSearched &&  valueOfItem != '' &&  filtered.push(item)  
       })  
         break;
       case "allFinancialRatios":
         allFinancialRatios.map(item=>{ 
-          
+          valueOfItem = +item.Info[label]
           valueOfItem  < valueSearched &&  valueOfItem != '' &&  filtered.push(item)  
       })   
         break;
       case "allKeyMetrics":
         allKeyMetrics.map(item=>{ 
-          
+          valueOfItem = +item.Info[label]
           valueOfItem  < valueSearched &&  valueOfItem != '' &&  filtered.push(item)  
       })     
         break;
       case "allRatings":
         allRatings.map(item=>{ 
-          
+          valueOfItem = +item.Info[label]
           valueOfItem  < valueSearched &&  valueOfItem != '' &&  filtered.push(item)  
       })   
         break;
       case "allRealTimeQuotes":
         allRealTimeQuotes.map(item=>{ 
-          
+          valueOfItem = +item.Info[label]
           valueOfItem  < valueSearched &&  valueOfItem != '' &&  filtered.push(item)  
       })    
         break;
       case "allFinancialGrowth":
         allFinancialGrowth.map(item=>{ 
-          
+          valueOfItem = +item.Info[label]
           valueOfItem  < valueSearched &&  valueOfItem != '' &&  filtered.push(item)  
       })    
         break;
      
     }
-    filtered.sort((a, b) => a?.Info[valueSearched.toLocaleLowerCase()] - b?.Info[valueSearched.toLocaleLowerCase()])
+    // filtered.sort((a, b) => a?.Info[valueSearched.toLocaleLowerCase()] - b?.Info[valueSearched.toLocaleLowerCase()])
         res.json( filtered)
 
 })
@@ -342,56 +342,56 @@ app.get('/getGreaterThan/:routeName',(req,res)=>{
     const {label,value}=req.query
     const filtered= []
     let valueSearched =  +value;
-    let valueOfItem = +item.Info[label]
+    let valueOfItem ;
 
     switch (routeName) {
       case "allCompanyProfile":
         
         allCompanyProfile.map(item=>{ 
-         
+          valueOfItem = +item.Info[label]
           valueOfItem  > valueSearched &&  valueOfItem != '' &&  filtered.push(item)  
       })  
         break;
       case "allSharesFloat":
         
         allSharesFloat.map(item=>{ 
-         
+          valueOfItem = +item.Info[label]
           valueOfItem  > valueSearched &&  valueOfItem != '' &&  filtered.push(item)  
       })  
         break;
       case "allFinancialRatios":
         allFinancialRatios.map(item=>{ 
-         
+          valueOfItem = +item.Info[label]
           valueOfItem  > valueSearched && valueOfItem != '' &&   filtered.push(item)  
       })   
         break;
       case "allKeyMetrics":
         allKeyMetrics.map(item=>{ 
-         
+          valueOfItem = +item.Info[label]
           valueOfItem  > valueSearched &&  valueOfItem != '' &&  filtered.push(item)  
       })     
         break;
       case "allRatings":
         allRatings.map(item=>{ 
-         
+          valueOfItem = +item.Info[label]
           valueOfItem  > valueSearched &&  valueOfItem != '' &&  filtered.push(item)  
       })   
         break;
       case "allRealTimeQuotes":
         allRealTimeQuotes.map(item=>{ 
-         
+          valueOfItem = +item.Info[label]
           valueOfItem  > valueSearched &&  valueOfItem != '' &&  filtered.push(item)  
       })    
         break;
       case "allFinancialGrowth":
         allFinancialGrowth.map(item=>{ 
-         
+          valueOfItem = +item.Info[label]
           valueOfItem  > valueSearched &&  valueOfItem != '' &&  filtered.push(item)  
       })    
         break;
      
     }
-    filtered.sort((a, b) => b?.Info[valueSearched.toLocaleLowerCase()] - a?.Info[valueSearched.toLocaleLowerCase()])
+    // filtered.sort((a, b) => b?.Info[valueSearched.toLocaleLowerCase()] - a?.Info[valueSearched.toLocaleLowerCase()])
         res.json( filtered)
 
 })
