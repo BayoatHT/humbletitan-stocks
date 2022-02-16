@@ -333,7 +333,7 @@ app.get('/getLessThan/:routeName',(req,res)=>{
         break;
      
     }
-    // filtered.sort((a, b) => a?.Info[valueSearched.toLocaleLowerCase()] - b?.Info[valueSearched.toLocaleLowerCase()])
+    filtered.sort((a, b) => a?.Info[valueSearched.toLocaleLowerCase()] - b?.Info[valueSearched.toLocaleLowerCase()])
         res.json( filtered)
 
 })
@@ -391,7 +391,7 @@ app.get('/getGreaterThan/:routeName',(req,res)=>{
         break;
      
     }
-    // filtered.sort((a, b) => b?.Info[valueSearched.toLocaleLowerCase()] - a?.Info[valueSearched.toLocaleLowerCase()])
+    filtered.sort((a, b) => b?.Info[valueSearched.toLocaleLowerCase()] - a?.Info[valueSearched.toLocaleLowerCase()])
         res.json( filtered)
 
 })
