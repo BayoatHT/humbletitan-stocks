@@ -699,17 +699,37 @@ app.get('/companynames',async(req,res)=>{
   }
 })
  
+const customRoutes = []
 
-app.post('/custom-pages',jsonParser,(req,res)=>{
-  let data =[]
+app.post('/filteredData',jsonParser,(req,res)=>{
+  let filterlabel = req.query.filterlabel
+  let filterCondition = req.query.filterCondition
+  let filterValue = req.query.filterValue
+  let data ={profile:[],financial:[]}
   allTickers.map(item=>{
-    req.body.map(i=>i.Symbol == item.Symbol && data.push(item))
+    req.body.map(i=>i.Symbol == item.Symbol && data.profile.push(item))
   })
   allFinancialRatios.map(item=>{
-    req.body.map(i=>i.Symbol == item.Symbol && data.push(item))
+    req.body.map(i=>i.Symbol == item.Symbol && data.financial.push(item))
   })
-  
-  res.json(data)
+  customRoutes.push({data, url: filterlabel+filterCondition+filterValue})
+
+  res.json({url:`https://humbletitanapi.herokuapp.com/filtered-data?filterlabel=${filterlabel}&filterCondition=${filterCondition}&filterValue=${filterValue}`})
+})
+
+app.get('/filtered-data',(req,res)=>{
+  let filterlabel = req.query.filterlabel
+  let filterCondition = req.query.filterCondition
+  let filterValue = req.query.filterValue
+  let url = filterlabel + filterCondition + filterValue
+  customRoutes.map(item=>{
+    if(item.url == url){
+      res.json(item.data)
+    }
+    })
+
+
+
 })
 
 
