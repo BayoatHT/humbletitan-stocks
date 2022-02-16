@@ -701,7 +701,15 @@ app.get('/companynames',async(req,res)=>{
  
 
 app.post('/custom-pages',jsonParser,(req,res)=>{
-  res.json(req.body)
+  let data =[]
+  allTickers.map(item=>{
+    req.body.map(i=>i.Symbol == item.Symbol && data.push(item))
+  })
+  allFinancialRatios.map(item=>{
+    req.body.map(i=>i.Symbol == item.Symbol && data.push(item))
+  })
+  
+  res.json(data)
 })
 
 
