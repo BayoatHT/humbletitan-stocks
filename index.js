@@ -333,7 +333,7 @@ app.get('/getLessThan/:routeName',(req,res)=>{
         break;
      
     }
-    filtered.sort((a, b) => a?.Info[label] - b?.Info[label])
+    filtered.sort((a, b) => b?.Info[label] - a?.Info[label])
         res.json( filtered)
 
 })
@@ -391,7 +391,7 @@ app.get('/getGreaterThan/:routeName',(req,res)=>{
         break;
      
     }
-    filtered.sort((a, b) => b?.Info[label] - a?.Info[label])
+    filtered.sort((a, b) => a?.Info[label] - b?.Info[label])
         res.json( filtered)
 
 })
