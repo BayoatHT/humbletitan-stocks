@@ -92,6 +92,8 @@ const sortArray = (tickers) => {
 
   sortedData.push(...sortedArray)
 
+  listingCompanies()
+
   // alphabetically Sorted Pagination
   let mapLength = Math.ceil(sortedArray.length / 30)
   let b = 0
@@ -219,7 +221,7 @@ const sortArray = (tickers) => {
 const listingCompanies =()=>{
   sortedData.map(item=>listOfCompanies.push({symbol:item.Symbol,companyname:item.Info.companyname}))
 }
-listingCompanies()
+
 
 
 app.get('/', (req, res) => {
