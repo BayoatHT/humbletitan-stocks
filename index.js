@@ -83,7 +83,7 @@ let pagination = []
 let sectorsFilteredData = []
 let countryFilteredData = []
 let industryFilteredData = []
-
+const listOfCompanies =[]
 const sortArray = (tickers) => {
 
   const sortedArray = tickers.sort(function (a, b) {
@@ -216,7 +216,10 @@ const sortArray = (tickers) => {
 
 
 }
-
+const listingCompanies =()=>{
+  sortedData.map(item=>listOfCompanies.push({symbol:item.Symbol,companyname:item.Info.companyname}))
+}
+listingCompanies()
 
 
 app.get('/', (req, res) => {
@@ -225,6 +228,10 @@ app.get('/', (req, res) => {
     data.push(allTickers[i])
   }
   res.send(data)
+})
+
+app.get('/list-of-companies',(req,res)=>{
+    res.json(listOfCompanies)   
 })
 
 app.get('/alltickersort', async (req, res) => {
