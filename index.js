@@ -668,19 +668,26 @@ app.get('/competitors/:symbol', async (req, res) => {
     const profile = await getDataById(id, Peers_Table)
     const competitorsSymbols = profile?.Item?.Info?.Peers
     let c = []
-    const competitorsNames = async () => Promise.all(competitorsSymbols.map((competitor) => getDataById(competitor, 'CompanyProfile')))
-    competitorsNames()
-      .then(data => {
-        data.map(({ Item: { Info: { companyname } } }) => c.push(companyname))
+    competitorsSymbols.map(item=>{
+      sortedData.map(i=>{
+        if(i.Symbol === item){
+          c.push([item,i.Info.companyname])
+        }
       })
-      .then(() => {
-        let b = []
-        c.map((i, index) => {
-          b.push([competitorsSymbols[index], i])
-        })
-        res.json(b)
+    })
+    // const competitorsNames = async () => Promise?.all(competitorsSymbols?.map((competitor) => getDataById(competitor, 'CompanyProfile')))
+    // competitorsNames()
+    //   .then(data => {
+    //     data.map(({ Item: { Info: { companyname } } }) => c.push(companyname))
+    //   })
+    //   .then(() => {
+    //     let b = []
+    //     c.map((i, index) => {
+    //       b.push([competitorsSymbols[index], i])
+    //     })
+        res.json(c)
 
-      })
+    //   })
   } catch (error) {
     console.error(error)
     res.status(500).json({ err: 'Something went wrong' })
