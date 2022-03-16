@@ -664,27 +664,27 @@ app.get('/competitors/:symbol', async (req, res) => {
    res.header('Access-Control-Allow-Methods', 'GET');
   const Peers_Table = "Peers"
   const id = req.params.symbol
-  // try {
-  //   const profile = await getDataById(id, Peers_Table)
-  //   const competitorsSymbols = profile?.Item?.Info?.Peers
-  //   let c = []
-  //   const competitorsNames = async () => Promise.all(competitorsSymbols.map((competitor) => getDataById(competitor, 'CompanyProfile')))
-  //   competitorsNames()
-  //     .then(data => {
-  //       data.map(({ Item: { Info: { companyname } } }) => c.push(companyname))
-  //     })
-  //     .then(() => {
-  //       let b = []
-  //       c.map((i, index) => {
-  //         b.push([competitorsSymbols[index], i])
-  //       })
-  //       res.json(b)
+  try {
+    const profile = await getDataById(id, Peers_Table)
+    const competitorsSymbols = profile?.Item?.Info?.Peers
+    let c = []
+    const competitorsNames = async () => Promise.all(competitorsSymbols.map((competitor) => getDataById(competitor, 'CompanyProfile')))
+    competitorsNames()
+      .then(data => {
+        data.map(({ Item: { Info: { companyname } } }) => c.push(companyname))
+      })
+      .then(() => {
+        let b = []
+        c.map((i, index) => {
+          b.push([competitorsSymbols[index], i])
+        })
+        res.json(b)
 
-  //     })
-  // } catch (error) {
-  //   console.error(error)
-  //   res.status(500).json({ err: 'Something went wrong' })
-  // }
+      })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ err: 'Something went wrong' })
+  }
   
 })
 app.get('/topgainers',(req,res)=>{
@@ -744,7 +744,19 @@ app.get('/filtered-data',(req,res)=>{
 
 
 })
+app.get('/charts/:symbol', async (req, res, next)=>{
+  const CHART_TABLENAME = "CompanyClose"
+  const id = req.params.symbol
 
+  try{
+    const chartData = await getDataById(id, CHART_TABLENAME)
+    res.json({ chartData })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ err: "Something went wrong" })
+    return
+  }
+})
 
 const port = process.env.PORT || 3000
 
