@@ -669,19 +669,29 @@ app.get('/competitors/:symbol', async (req, res) => {
     const competitorsSymbols = profile?.Item?.Info?.Peers
     let c = []
     competitorsSymbols.map(item=>{
-      sortedData.map(i=>{
-        if(i.Symbol === item){
-          c.push([item,i.Info.companyname])
+    sortedData.map(i=>{
+      let con = false  
+      
+      if(i.Symbol === item){ 
+          c.map(a=>{
+            if(a[0] ===item){
+                 con = true
+            }
+          })
+        if(!con){
+            c.push([item,i.Info.companyname])
+          }
         }
       })
     })
+ 
     // const competitorsNames = async () => Promise?.all(competitorsSymbols?.map((competitor) => getDataById(competitor, 'CompanyProfile')))
     // competitorsNames()
     //   .then(data => {
     //     data.map(({ Item: { Info: { companyname } } }) => c.push(companyname))
     //   })
     //   .then(() => {
-    //     let b = []
+    //     let b = [] 
     //     c.map((i, index) => {
     //       b.push([competitorsSymbols[index], i])
     //     })
