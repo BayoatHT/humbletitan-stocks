@@ -764,7 +764,7 @@ app.get('/competitors/:symbol', async (req, res) => {
   try {
     // const profile = await getDataById(id, Peers_Table)
     // const competitorsSymbols = profile?.Item?.Info?.Peers
-    const profile = Peers.filter((item)=> item.Symbol === id)
+    const profile = Peers.find((item)=> item.Symbol === id)
     // const competitorsSymbols = profile?.Item?.Info?.Peers
     const competitorsSymbols = profile?.Peers
     let c = []
