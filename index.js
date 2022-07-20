@@ -133,8 +133,8 @@ const getData = async (sheetId, sheetRange, dataArr) => {
 
 app.get('/myTest', async (req, res) => {
 
-  res.send(Peers)
-  console.log(Peers.length)
+  res.send(allRatings.slice(0, 10))
+  console.log(allRatings.length)
 })
 getData("1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY", "All Tickers - Company Profile!D3:AM7047", allCompanyProfile).then(aja => console.log("Company Profile")).catch((error) => console.log("Company Profile", error.message))
 getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "All Tickers - Shares Float!D3:J5658", allSharesFloat).then(aja => console.log("Shares Float")).catch((error) => console.log("Shares Float", error.message))
@@ -142,6 +142,7 @@ getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "All Tickers - Financial
 getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "All Tickers - Key Metrics TTM!D3:BL7874", allKeyMetrics).then(aja => console.log("Key Metrics TTM")).catch((error) => console.log("Key Metrics TTM", error.message))
 getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "All Tickers - Real Time Quote!D3:Y7416", allRealTimeQuotes).then(aja => console.log("Real Time Quote")).catch((error) => console.log("Real Time Quote", error.message))
 getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "All Tickers - Financial Growth ANN!D3:AN7053", allFinancialGrowth).then(aja => console.log("Financial Growth ANN")).catch((error) => console.log("Financial Growth ANN", error.message))
+getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "Ratings!D3:T6025", allRatings).then(aja => console.log("Ratings")).catch((error) => console.log("Ratings", error.message))
 getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "Stock Market Top Active!D3:I33", topActive).then(aja => console.log("Top Active")).catch((error) => console.log("Top Active", error.message))
 getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "Stock Market Top Gainers!D3:I33", topGainers).then(aja => console.log("Top Gainers")).catch((error) => console.log("Top Gainers", error.message))
 getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "Stock Market Top Losers!D3:I33", topLosers).then(aja => console.log("Top Losers")).catch((error) => console.log("Top Losers", error.message))
@@ -736,14 +737,14 @@ app.get('/companydetails/:symbol', async (req, res) => {
     // const comapnyRating = await getDataById(id, RATING_TABLENAME)
     // const comapnyRealTimeQuote = await getDataById(id, REALTIMEQUOTES_TABLENAME)
     // const comapnyFinancialGrowth = await getDataById(id, FINANCIALGROWTH_TABLENAME)
-    const companyProfile =  allCompanyProfile.filter((item)=> item.Symbol === id)
-    const companyShares =  allSharesFloat.filter((item)=> item.Symbol === id)
-    const comapnyFinancialRatio =  allFinancialRatios.filter((item)=> item.Symbol === id)
-    const comapnyKeymetrics =  allKeyMetrics.filter((item)=> item.Symbol === id)
-    const comapnyRating =  allRatings.filter((item)=> item.Symbol === id)
-    const comapnyRealTimeQuote =  allRealTimeQuotes.filter((item)=> item.Symbol === id)
-    const comapnyFinancialGrowth =  allFinancialGrowth.filter((item)=> item.Symbol === id)
-    const competitors = Peers.filter((item)=> item.Symbol === id)
+    const companyProfile =  allCompanyProfile.find((item)=> item.Symbol === id)
+    const companyShares =  allSharesFloat.find((item)=> item.Symbol === id)
+    const comapnyFinancialRatio =  allFinancialRatios.find((item)=> item.Symbol === id)
+    const comapnyKeymetrics =  allKeyMetrics.find((item)=> item.Symbol === id)
+    const comapnyRating =  allRatings.find((item)=> item.Symbol === id)
+    const comapnyRealTimeQuote =  allRealTimeQuotes.find((item)=> item.Symbol === id)
+    const comapnyFinancialGrowth =  allFinancialGrowth.find((item)=> item.Symbol === id)
+    const competitors = Peers.find((item)=> item.Symbol === id)
 
 
 
@@ -864,7 +865,7 @@ app.get('/charts/:symbol', async (req, res, next) => {
 
   try {
     // const chartData = await getDataById(id, CHART_TABLENAME)
-    const chartData =  StockColsingPrice.filter((item)=> item.Symbol === id)
+    const chartData =  StockColsingPrice.find((item)=> item.Symbol === id)
     res.json({ chartData })
   } catch (error) {
     console.log(error)
