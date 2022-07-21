@@ -166,6 +166,7 @@ let sectorsFilteredData = []
 let countryFilteredData = []
 let industryFilteredData = []
 const listOfCompanies = []
+
 const sortArray = (tickers) => {
 
   const sortedArray = tickers.sort(function (a, b) {
@@ -314,7 +315,7 @@ const listingCompanies = () => {
 app.get('/', (req, res) => {
   let data = []
   for (i = 0; i == 30; i++) {
-    data.push(allTickers[i])
+    data.push(sortedData[i])
   }
   res.send(data)
   console.log("data Sent", data)
@@ -588,7 +589,6 @@ app.get('/getEndingWith/:routeName', (req, res) => {
       break;
 
   }
-
   res.json(filtered)
 
 })
@@ -634,6 +634,8 @@ app.get('/tickers_page/:id', (req, res) => {
   res.header('Access-Control-Allow-Methods', 'GET');
   res.json([pagination[Id], { itemLength: sortedData.length }])
 })
+
+
 
 app.get('/sectors/:name', (req, res) => {
   res.header('Access-Control-Allow-Origin', "*");
@@ -815,13 +817,15 @@ app.get('/toplosers', (req, res) => {
   res.json(topLosers)
 })
 
+
 app.get('/companynames', async (req, res) => {
   let companynames = searchingFilter()
   let companyname = req.query.companyname
   if (!companyname) {
     res.json(companynames)
   } else {
-    const filtered = allTickers.filter(item => item.Info.companyname === companyname)
+    const filtered = sortedData.filter(item => item.Info.companyname === companyname)
+    console.log("filtered",filtered)
     res.json(filtered)
   }
 })
@@ -835,7 +839,7 @@ app.post('/filteredData', jsonParser, (req, res) => {
   let data = { profile: [], financial: [] }
   let newData = []
   req.body.data.map(i => {
-    allTickers.map(item => i.Symbol == item.Symbol && data.profile.push(item))
+    sortedData.map(item => i.Symbol == item.Symbol && data.profile.push(item))
     allFinancialRatios.map(item => i.Symbol == item.Symbol && data.financial.push(item))
   })
   data.profile.map(item => {
@@ -855,9 +859,6 @@ app.get('/filtered-data/:id', (req, res) => {
       res.json(item.data)
     }
   })
-
-
-
 })
 app.get('/charts/:symbol', async (req, res, next) => {
   const CHART_TABLENAME = "CompanyClose"
