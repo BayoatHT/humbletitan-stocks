@@ -137,17 +137,17 @@ app.get('/myTest', async (req, res) => {
   console.log(allRatings.length)
 })
 getData("1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY", "All Tickers - Company Profile!D3:AM7047", allCompanyProfile).then(aja => console.log("Company Profile")).catch((error) => console.log("Company Profile", error.message))
-getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "All Tickers - Shares Float!D3:J5658", allSharesFloat).then(aja => console.log("Shares Float")).catch((error) => console.log("Shares Float", error.message))
-getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "All Tickers - Financial Ratios TTM!D3:BJ7874", allFinancialRatios).then(aja => console.log("Financial Ratios TTM")).catch((error) => console.log("Financial Ratios TTM", error.message))
-getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "All Tickers - Key Metrics TTM!D3:BL7874", allKeyMetrics).then(aja => console.log("Key Metrics TTM")).catch((error) => console.log("Key Metrics TTM", error.message))
-getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "All Tickers - Real Time Quote!D3:Y7416", allRealTimeQuotes).then(aja => console.log("Real Time Quote")).catch((error) => console.log("Real Time Quote", error.message))
-getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "All Tickers - Financial Growth ANN!D3:AN7053", allFinancialGrowth).then(aja => console.log("Financial Growth ANN")).catch((error) => console.log("Financial Growth ANN", error.message))
-getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "Ratings!D3:T6025", allRatings).then(aja => console.log("Ratings")).catch((error) => console.log("Ratings", error.message))
-getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "Stock Market Top Active!D3:I33", topActive).then(aja => console.log("Top Active")).catch((error) => console.log("Top Active", error.message))
-getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "Stock Market Top Gainers!D3:I33", topGainers).then(aja => console.log("Top Gainers")).catch((error) => console.log("Top Gainers", error.message))
-getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "Stock Market Top Losers!D3:I33", topLosers).then(aja => console.log("Top Losers")).catch((error) => console.log("Top Losers", error.message))
-getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "Peers!D3:N6660", Peers).then(aja => console.log("Peers")).catch((error) => console.log("Peers", error.message))
-getData('1sS5DQH7bcQpKz--Nu4oK1pdRaaIQVqvINjCxYRdgQS8', "90 Stock Closing Price!E3:DU7555", StockColsingPrice).then(aja => console.log("Stock Colsing Price")).catch((error) => console.log("Stock Colsing Price", error.message))
+// getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "All Tickers - Shares Float!D3:J5658", allSharesFloat).then(aja => console.log("Shares Float")).catch((error) => console.log("Shares Float", error.message))
+// getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "All Tickers - Financial Ratios TTM!D3:BJ7874", allFinancialRatios).then(aja => console.log("Financial Ratios TTM")).catch((error) => console.log("Financial Ratios TTM", error.message))
+// getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "All Tickers - Key Metrics TTM!D3:BL7874", allKeyMetrics).then(aja => console.log("Key Metrics TTM")).catch((error) => console.log("Key Metrics TTM", error.message))
+// getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "All Tickers - Real Time Quote!D3:Y7416", allRealTimeQuotes).then(aja => console.log("Real Time Quote")).catch((error) => console.log("Real Time Quote", error.message))
+// getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "All Tickers - Financial Growth ANN!D3:AN7053", allFinancialGrowth).then(aja => console.log("Financial Growth ANN")).catch((error) => console.log("Financial Growth ANN", error.message))
+// getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "Ratings!D3:T6025", allRatings).then(aja => console.log("Ratings")).catch((error) => console.log("Ratings", error.message))
+// getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "Stock Market Top Active!D3:I33", topActive).then(aja => console.log("Top Active")).catch((error) => console.log("Top Active", error.message))
+// getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "Stock Market Top Gainers!D3:I33", topGainers).then(aja => console.log("Top Gainers")).catch((error) => console.log("Top Gainers", error.message))
+// getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "Stock Market Top Losers!D3:I33", topLosers).then(aja => console.log("Top Losers")).catch((error) => console.log("Top Losers", error.message))
+// getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "Peers!D3:N6660", Peers).then(aja => console.log("Peers")).catch((error) => console.log("Peers", error.message))
+// getData('1sS5DQH7bcQpKz--Nu4oK1pdRaaIQVqvINjCxYRdgQS8', "90 Stock Closing Price!E3:DU7555", StockColsingPrice).then(aja => console.log("Stock Colsing Price")).catch((error) => console.log("Stock Colsing Price", error.message))
 
 
 // getData('FinancialRatiosTTM',allFinancialRatios).then(aja => console.log(""))
@@ -165,6 +165,7 @@ let pagination = []
 let sectorsFilteredData = []
 let countryFilteredData = []
 let industryFilteredData = []
+let marketCapsFilteredData = []
 const listOfCompanies = []
 
 const sortArray = (tickers) => {
@@ -200,15 +201,18 @@ const sortArray = (tickers) => {
   let allSectorNames = []
   let allCountryNames = []
   let allIndustryNames = []
+  let allMarketCaps = []
   sortedArray.map((item) => {
     allSectorNames.push(item.Info.sector);
     allCountryNames.push(item.Info.country);
     allIndustryNames.push(item.Info.industry)
+    allMarketCaps.push(item.Info.mktcap)
   })
 
   let uniqueSectorNames = [...new Set(allSectorNames)]
   let uniqueCountryNames = [...new Set(allCountryNames)]
   let uniqueIndustryNames = [...new Set(allIndustryNames)]
+  let uniqueMarketCaps = [...new Set(allMarketCaps)]
 
   uniqueSectorNames.map(item => {
     sectorsFilteredData.push({ name: item, items: [], pagination: [] })
@@ -219,13 +223,15 @@ const sortArray = (tickers) => {
   uniqueIndustryNames.map(item => {
     industryFilteredData.push({ name: item, items: [], pagination: [] })
   })
+  uniqueMarketCaps.map(item => {
+    marketCapsFilteredData.push({ name: item, items: [], pagination: [] })
+  })
 
   sortedArray.map(item => {
     uniqueSectorNames.map(subItem => {
       if (subItem === item.Info.sector) {
         sectorsFilteredData.map((i, index) => {
           if (i.name === subItem) {
-
             sectorsFilteredData[index].items.push(item)
           }
         })
@@ -233,12 +239,29 @@ const sortArray = (tickers) => {
     })
     uniqueCountryNames.map(subItem => {
       if (subItem === item.Info.country) {
-        countryFilteredData.map((i, index) => { if (i.name === subItem) { countryFilteredData[index].items.push(item) } })
+        countryFilteredData.map((i, index) => { 
+          if (i.name === subItem) { 
+            countryFilteredData[index].items.push(item) 
+          } 
+        })
       }
     })
     uniqueIndustryNames.map(subItem => {
       if (subItem === item.Info.industry) {
-        industryFilteredData.map((i, index) => { if (i.name === subItem) { industryFilteredData[index].items.push(item) } })
+        industryFilteredData.map((i, index) => { 
+          if (i.name === subItem) { 
+            industryFilteredData[index].items.push(item) 
+          } 
+        })
+      }
+    })
+    uniqueMarketCaps.map(subItem => {
+      if (subItem === item.Info.mktcap) {
+        marketCapsFilteredData.map((i, index) => { 
+          if (i.name === subItem) { 
+            marketCapsFilteredData[index].items.push(item) 
+          } 
+        })
       }
     })
   }
@@ -248,7 +271,7 @@ const sortArray = (tickers) => {
   sectorsFilteredData.map(item => {
     let mapLength = Math.ceil(item.items.length / 30)
     let b = 0
-    for (i = 0; mapLength > i; i++) {
+    for (let i = 0; mapLength > i; i++) {
       b = i !== 0 ? b + 30 : 0
 
       let sortedPage = {
@@ -266,7 +289,7 @@ const sortArray = (tickers) => {
   countryFilteredData.map(item => {
     let mapLength = Math.ceil(item.items.length / 30)
     let b = 0
-    for (i = 0; mapLength > i; i++) {
+    for (let i = 0; mapLength > i; i++) {
       b = i !== 0 ? b + 30 : 0
 
       let sortedPage = {
@@ -284,22 +307,40 @@ const sortArray = (tickers) => {
   industryFilteredData.map(item => {
     let mapLength = Math.ceil(item.items.length / 30)
     let b = 0
-    for (i = 0; mapLength > i; i++) {
+    for (let i = 0; mapLength > i; i++) {
       b = i !== 0 ? b + 30 : 0
 
       let sortedPage = {
         pageNo: i + 1,
         items: []
       }
-
+      
       for (let x = b; b + 30 > x; x++) {
         sortedPage.items.push(item.items[x])
-
+        
       }
       item.pagination.push(sortedPage)
     }
   })
-
+  marketCapsFilteredData.map(item => {
+    let mapLength = Math.ceil(item.items.length / 30)
+    let b = 0
+    for (let i = 0; mapLength > i; i++) {
+      b = i !== 0 ? b + 30 : 0
+      
+      let sortedPage = {
+        pageNo: i + 1,
+        items: []
+      }
+      
+      for (let x = b; b + 30 > x; x++) {
+        sortedPage.items.push(item.items[x])
+        
+      }
+      item.pagination.push(sortedPage)
+    }
+  })
+  
 }
 
 const listingCompanies = () => {
@@ -567,8 +608,8 @@ app.get('/getEndingWith/:routeName', (req, res) => {
         item.Info[label][item.Info[label].length - 1] === value && filtered.push(item)
       })
       break;
-    case "allKeyMetrics":
-      allKeyMetrics.map(item => {
+      case "allKeyMetrics":
+        allKeyMetrics.map(item => {
         item.Info[label][item.Info[label].length - 1] === value && filtered.push(item)
       })
       break;
@@ -688,6 +729,35 @@ app.get('/industries/:name', (req, res) => {
     let a = item.name.replace(" ", "")
     return a === name
   })
+  // let response = [{ pagination: data[0].pagination.length > 0 ? data[0].pagination : false, itemsLength: [data[0].items.length], items: data[0].pagination.length === 0 ? data[0].items : false }]
+  // if (response[0].pagination) {
+  //   let resp = response[0].pagination[pageNo]
+  //   let length = response[0].itemsLength
+  //   res.json([resp, { itemLength: length }])
+
+  // } else {
+  //   let resp = response[0].items
+  //   let length = response[0].itemsLength
+  //   res.json([resp, { itemLength: length }])
+  // }
+  // res.json(data.slice(0,10))
+})
+
+
+app.get('/marketkCap/:name', (req, res) => {
+  res.header('Access-Control-Allow-Origin', "*");
+  res.header('Access-Control-Allow-Methods', 'GET');
+  let pageNo = req.query.pageNo - 1
+  
+  // formatting range from "$30000-$40000" to a=30000 and b=40000
+  let name = req.params.name.replaceAll(" ", "").replaceAll("$","").split("-")
+  let a = Number(name[0])
+  let b = Number(name[1])
+  
+  let data = marketCapsFilteredData.filter(item => {
+    let val = item.name.replace(/[^0-9.-]+/g,"").replace(".00", "")
+    return val >= a && val <= b
+  })
   let response = [{ pagination: data[0].pagination.length > 0 ? data[0].pagination : false, itemsLength: [data[0].items.length], items: data[0].pagination.length === 0 ? data[0].items : false }]
   if (response[0].pagination) {
     let resp = response[0].pagination[pageNo]
@@ -699,7 +769,8 @@ app.get('/industries/:name', (req, res) => {
     let length = response[0].itemsLength
     res.json([resp, { itemLength: length }])
   }
-
+  console.log("data", data.slice(0,3))
+  // console.log(marketCapsFilteredData.slice(0,3))
 })
 
 
@@ -825,7 +896,6 @@ app.get('/companynames', async (req, res) => {
     res.json(companynames)
   } else {
     const filtered = sortedData.filter(item => item.Info.companyname === companyname)
-    console.log("filtered",filtered)
     res.json(filtered)
   }
 })
