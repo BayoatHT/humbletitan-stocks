@@ -136,6 +136,8 @@ app.get('/myTest', async (req, res) => {
   res.send(allRatings.slice(0, 10))
   console.log(allRatings.length)
 })
+
+// async function getData(arg1, arg2, arg3)
 getData("1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY", "All Tickers - Company Profile!D3:AM7047", allCompanyProfile).then(aja => console.log("Company Profile")).catch((error) => console.log("Company Profile", error.message))
 getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "All Tickers - Shares Float!D3:J5658", allSharesFloat).then(aja => console.log("Shares Float")).catch((error) => console.log("Shares Float", error.message))
 getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "All Tickers - Financial Ratios TTM!D3:BJ7874", allFinancialRatios).then(aja => console.log("Financial Ratios TTM")).catch((error) => console.log("Financial Ratios TTM", error.message))
@@ -729,18 +731,17 @@ app.get('/industries/:name', (req, res) => {
     let a = item.name.replace(" ", "")
     return a === name
   })
-  // let response = [{ pagination: data[0].pagination.length > 0 ? data[0].pagination : false, itemsLength: [data[0].items.length], items: data[0].pagination.length === 0 ? data[0].items : false }]
-  // if (response[0].pagination) {
-  //   let resp = response[0].pagination[pageNo]
-  //   let length = response[0].itemsLength
-  //   res.json([resp, { itemLength: length }])
+  let response = [{ pagination: data[0].pagination.length > 0 ? data[0].pagination : false, itemsLength: [data[0].items.length], items: data[0].pagination.length === 0 ? data[0].items : false }]
+  if (response[0].pagination) {
+    let resp = response[0].pagination[pageNo]
+    let length = response[0].itemsLength
+    res.json([resp, { itemLength: length }])
 
-  // } else {
-  //   let resp = response[0].items
-  //   let length = response[0].itemsLength
-  //   res.json([resp, { itemLength: length }])
-  // }
-  // res.json(data.slice(0,10))
+  } else {
+    let resp = response[0].items
+    let length = response[0].itemsLength
+    res.json([resp, { itemLength: length }])
+  }
 })
 
 
@@ -769,8 +770,6 @@ app.get('/marketkCap/:name', (req, res) => {
     let length = response[0].itemsLength
     res.json([resp, { itemLength: length }])
   }
-  console.log("data", data.slice(0,3))
-  // console.log(marketCapsFilteredData.slice(0,3))
 })
 
 
