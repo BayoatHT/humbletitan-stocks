@@ -748,7 +748,7 @@ app.get('/industries/:name', (req, res) => {
 app.get('/marketkCap/:name', (req, res) => {
   res.header('Access-Control-Allow-Origin', "*");
   res.header('Access-Control-Allow-Methods', 'GET');
-  let pageNo = req.query.pageNo - 1
+  let pageNo = req.query.pageNo
   
   // formatting range from "$30000-$40000" to a=30000 and b=40000
   let name = req.params.name.replaceAll(" ", "").replaceAll("$","").split("-")
@@ -757,20 +757,15 @@ app.get('/marketkCap/:name', (req, res) => {
   
   let data = marketCapsFilteredData.filter(item => {
     let val = item.name.replace(/[^0-9.-]+/g,"").replace(".00", "")
-    return val > min && val < max
+    return val >= min && val <= max
   })
-  let response = [{ pagination: data[0].pagination.length > 0 ? data[0].pagination : false, itemsLength: [data[0].items.length], items: data[0].pagination.length === 0 ? data[0].items : false }]
-  if (response[0].pagination) {
-    let resp = response[0].pagination[pageNo]
-    let length = response[0].itemsLength
-    res.json([resp, { itemLength: length }])
 
-  } else {
-    let resp = response[0].items
-    let length = response[0].itemsLength
-    res.json([resp, { itemLength: length }])
-  }
-  res.json(data)
+  let a = pageNo === 1 ? 0 : (pageNo * 30) - 30;
+  let b = pageNo * 30;
+  let sliced = data?.map((item)=> item?.items[0]).slice(a, b)
+  let response = [{ pageNo, items: sliced }, {itemsLength: [data.length]}]
+  return res.json(response)
+
 })
 
 
