@@ -752,12 +752,12 @@ app.get('/marketkCap/:name', (req, res) => {
   
   // formatting range from "$30000-$40000" to a=30000 and b=40000
   let name = req.params.name.replaceAll(" ", "").replaceAll("$","").split("-")
-  let a = Number(name[0])
-  let b = Number(name[1])
+  let min = Number(name[0])
+  let max = Number(name[1])
   
   let data = marketCapsFilteredData.filter(item => {
     let val = item.name.replace(/[^0-9.-]+/g,"").replace(".00", "")
-    return val >= a && val <= b
+    return val > min && val < max
   })
   let response = [{ pagination: data[0].pagination.length > 0 ? data[0].pagination : false, itemsLength: [data[0].items.length], items: data[0].pagination.length === 0 ? data[0].items : false }]
   if (response[0].pagination) {
@@ -770,6 +770,7 @@ app.get('/marketkCap/:name', (req, res) => {
     let length = response[0].itemsLength
     res.json([resp, { itemLength: length }])
   }
+  res.json(data)
 })
 
 
