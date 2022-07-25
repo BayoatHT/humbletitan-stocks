@@ -751,7 +751,7 @@ app.get('/marketkCap/:name', (req, res) => {
   let pageNo = req.query.pageNo
   
   // formatting range from "$30000-$40000" to a=30000 and b=40000
-  let name = req.params.name.replaceAll(" ", "").replaceAll("$","").split("-")
+  let name = req.params.name.replaceAll(" ", "").replaceAll("$","").replaceAll(",","").split("-")
   let min = Number(name[0])
   let max = Number(name[1])
   
