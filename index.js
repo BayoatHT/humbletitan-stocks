@@ -138,18 +138,18 @@ app.get('/myTest', async (req, res) => {
 })
 
 // async function getData(arg1, arg2, arg3)
-getData("1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY", "All Tickers - Company Profile!D3:AM7047", allCompanyProfile).then(aja => console.log("Company Profile")).catch((error) => console.log("Company Profile", error.message))
-getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "All Tickers - Shares Float!D3:J5658", allSharesFloat).then(aja => console.log("Shares Float")).catch((error) => console.log("Shares Float", error.message))
-getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "All Tickers - Financial Ratios TTM!D3:BJ7874", allFinancialRatios).then(aja => console.log("Financial Ratios TTM")).catch((error) => console.log("Financial Ratios TTM", error.message))
-getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "All Tickers - Key Metrics TTM!D3:BL7874", allKeyMetrics).then(aja => console.log("Key Metrics TTM")).catch((error) => console.log("Key Metrics TTM", error.message))
-getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "All Tickers - Real Time Quote!D3:Y7416", allRealTimeQuotes).then(aja => console.log("Real Time Quote")).catch((error) => console.log("Real Time Quote", error.message))
-getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "All Tickers - Financial Growth ANN!D3:AN7053", allFinancialGrowth).then(aja => console.log("Financial Growth ANN")).catch((error) => console.log("Financial Growth ANN", error.message))
-getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "Ratings!D3:T6025", allRatings).then(aja => console.log("Ratings")).catch((error) => console.log("Ratings", error.message))
-getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "Stock Market Top Active!D3:I33", topActive).then(aja => console.log("Top Active")).catch((error) => console.log("Top Active", error.message))
-getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "Stock Market Top Gainers!D3:I33", topGainers).then(aja => console.log("Top Gainers")).catch((error) => console.log("Top Gainers", error.message))
-getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "Stock Market Top Losers!D3:I33", topLosers).then(aja => console.log("Top Losers")).catch((error) => console.log("Top Losers", error.message))
-getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "Peers!D3:N6660", Peers).then(aja => console.log("Peers")).catch((error) => console.log("Peers", error.message))
-getData('1sS5DQH7bcQpKz--Nu4oK1pdRaaIQVqvINjCxYRdgQS8', "90 Stock Closing Price!E3:DU7555", StockColsingPrice).then(aja => console.log("Stock Colsing Price")).catch((error) => console.log("Stock Colsing Price", error.message))
+// getData("1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY", "All Tickers - Company Profile!D3:AM7047", allCompanyProfile).then(aja => console.log("Company Profile")).catch((error) => console.log("Company Profile", error.message))
+// getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "All Tickers - Shares Float!D3:J5658", allSharesFloat).then(aja => console.log("Shares Float")).catch((error) => console.log("Shares Float", error.message))
+// getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "All Tickers - Financial Ratios TTM!D3:BJ7874", allFinancialRatios).then(aja => console.log("Financial Ratios TTM")).catch((error) => console.log("Financial Ratios TTM", error.message))
+// getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "All Tickers - Key Metrics TTM!D3:BL7874", allKeyMetrics).then(aja => console.log("Key Metrics TTM")).catch((error) => console.log("Key Metrics TTM", error.message))
+// getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "All Tickers - Real Time Quote!D3:Y7416", allRealTimeQuotes).then(aja => console.log("Real Time Quote")).catch((error) => console.log("Real Time Quote", error.message))
+// getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "All Tickers - Financial Growth ANN!D3:AN7053", allFinancialGrowth).then(aja => console.log("Financial Growth ANN")).catch((error) => console.log("Financial Growth ANN", error.message))
+// getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "Ratings!D3:T6025", allRatings).then(aja => console.log("Ratings")).catch((error) => console.log("Ratings", error.message))
+// getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "Stock Market Top Active!D3:I33", topActive).then(aja => console.log("Top Active")).catch((error) => console.log("Top Active", error.message))
+// getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "Stock Market Top Gainers!D3:I33", topGainers).then(aja => console.log("Top Gainers")).catch((error) => console.log("Top Gainers", error.message))
+// getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "Stock Market Top Losers!D3:I33", topLosers).then(aja => console.log("Top Losers")).catch((error) => console.log("Top Losers", error.message))
+// getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', "Peers!D3:N6660", Peers).then(aja => console.log("Peers")).catch((error) => console.log("Peers", error.message))
+// getData('1sS5DQH7bcQpKz--Nu4oK1pdRaaIQVqvINjCxYRdgQS8', "90 Stock Closing Price!E3:DU7555", StockColsingPrice).then(aja => console.log("Stock Colsing Price")).catch((error) => console.log("Stock Colsing Price", error.message))
 
 
 // getData('FinancialRatiosTTM',allFinancialRatios).then(aja => console.log(""))
@@ -759,11 +759,11 @@ app.get('/marketkCap/:name', (req, res) => {
     let val = item.name.replace(/[^0-9.-]+/g,"").replace(".00", "")
     return val >= min && val <= max
   })
-
+  console.log(name)
   let a = pageNo === 1 ? 0 : (pageNo * 30) - 30;
   let b = pageNo * 30;
   let sliced = data?.map((item)=> item?.items[0]).slice(a, b)
-  let response = [{ pageNo, items: sliced }, {itemsLength: [data.length]}]
+  let response = [{ pageNo: Number(pageNo), items: sliced }, {itemsLength: [data.length]}]
   return res.json(response)
 
 })
