@@ -994,7 +994,7 @@ app.post('/filteredData', jsonParser, (req, res) => {
     headerText: req.body.headerText,
   })
 
-  res.send(`https://humbletitanapi.herokuapp.com/filtered-data/${req.body.url}`)
+  res.send(`https://https://h-t.vercel.app//filtered-data/${req.body.url}`)
 })
 
 app.get('/filtered-data/:id', (req, res) => {
