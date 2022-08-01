@@ -1,5 +1,4 @@
 const AWS = require('aws-sdk')
-const axios = require('axios')
 require('dotenv').config()
 const express = require('express')
 var path = require('path')
@@ -36,6 +35,7 @@ const topGainers = []
 const topLosers = []
 const StockColsingPrice = []
 const Peers = []
+const customRoutes = []
 
 // const getData = async (TABLE_NAME, arrayName) => {
 //   const params = {
@@ -130,10 +130,36 @@ const getData = async (sheetId, sheetRange, dataArr) => {
   return dataArr
 }
 
-app.get('/myTest', async (req, res) => {
-  res.send(allRatings.slice(0, 10))
-  console.log(allRatings.length)
-})
+const getAllCustomUrls = async () => {
+  const auth = new google.auth.GoogleAuth({
+    keyFile: path.resolve('./credintials.json'),
+    scopes: 'https://www.googleapis.com/auth/spreadsheets',
+  })
+
+  const client = await auth.getClient()
+
+  const googleSheets = google.sheets({ version: 'v4', auth: client })
+
+  const spreadsheetId = '16erRk6sE2t2HEiBeRzifr9plFQPBaVnR_5tnQtmQVLM'
+  const range = 'HT-custom-pages!A:G'
+
+  const getRows = await googleSheets.spreadsheets.values.get({
+    auth,
+    spreadsheetId,
+    range,
+  })
+  let rows = getRows.data.values.slice(1)
+  let headings = getRows.data.values[0]
+  rows.forEach((rows, i) => {
+    var value = {}
+    headings.forEach((title, j) => {
+      Object.assign(value, { [title.toLowerCase()]: rows[j] })
+    })
+    customRoutes.push(value)
+  })
+}
+
+getAllCustomUrls()
 
 //////////////// async function getData(arg1, arg2, arg3)
 getData(
@@ -1041,7 +1067,7 @@ app.get('/companynames', async (req, res) => {
   }
 })
 
-const customRoutes = []
+
 
 app.post('/filteredData', jsonParser, (req, res) => {
   let filterlabel = req.query.filterlabel
@@ -1078,21 +1104,21 @@ app.post('/filteredData', jsonParser, (req, res) => {
     url: req.body.url,
     headerText: req.body.headerText,
   })
-  res.send(`http://localhost:3000/due-diligence/filtered/${req.body.url}`)
+  res.send(`https://h-t.vercel.app/due-diligence/filtered/${req.body.url}`)
   // res.send(customRoutes)
 })
 
 app.get('/filtered-data/:slug', async (req, res) => {
   const slug = req.params.slug
-  const slugData = customRoutes.find((item) => item.url === slug)
+  const slugData = await customRoutes.find((item) => item.url === slug)
   console.log('slug', slug)
   console.log('slugData', slugData)
 
   const filterlabel = slugData.filterlabel.toLowerCase()
-  const filterCondition = slugData.filterCondition
-  const filterValue = slugData.filterValue
-  const headerText = slugData.headerText
-  const tableName = slugData.tableName
+  const filterCondition = slugData.filtercondition
+  const filterValue = slugData.filtervalue
+  const headerText = {heading: slugData.heading, description: slugData.description} 
+  const tableName = slugData.tablename
 
   let filteredData = []
   const filtertionOfFilteredData = (filtered) => {
@@ -1377,6 +1403,7 @@ app.get('/filtered-data/:slug', async (req, res) => {
 
   let data = { profile: [], financial: [] }
   let newData = []
+  console.log("filteredData", filteredData)
   filteredData.data.map((i) => {
     sortedData.map((item) => i.Symbol == item.Symbol && data.profile.push(item))
     allFinancialRatios.map(
