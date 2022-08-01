@@ -1090,17 +1090,17 @@ app.post('/filteredData', jsonParser, (req, res) => {
   customRoutes.push({
     // data: newData,
     filterlabel,
-    filterCondition,
-    filterValue,
-    tableName: req.body.tableName,
+    filtercondition: filterCondition,
+    filtervalue: filterValue,
+    tablename: req.body.tablename,
     url: req.body.url,
     headerText: req.body.headerText,
   })
   addCustomRouteToSheet({
     filterlabel,
-    filterCondition,
-    filterValue,
-    tableName: req.body.tableName,
+    filtercondition: filterCondition,
+    filtervalue: filterValue,
+    tablename: req.body.tablename,
     url: req.body.url,
     headerText: req.body.headerText,
   })
