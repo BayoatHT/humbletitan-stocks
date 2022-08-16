@@ -294,7 +294,7 @@ const addCustomRouteToSheet = async ({
           filterCondition,
           filterlabel,
           headerText.heading,
-          headerText.para,
+          headerText.description,
         ],
       ],
     },
@@ -1088,24 +1088,22 @@ app.post('/filteredData', jsonParser, (req, res) => {
   // })
 
   customRoutes.push({
-    // data: newData,
     filterlabel,
-    filtercondition: filterCondition,
-    filtervalue: filterValue,
-    tablename: req.body.tablename,
+    filterCondition,
+    filterValue,
+    tableName: req.body.tablename,
     url: req.body.url,
     headerText: req.body.headerText,
   })
   addCustomRouteToSheet({
     filterlabel,
-    filtercondition: filterCondition,
-    filtervalue: filterValue,
-    tablename: req.body.tablename,
+    filterCondition,
+    filterValue,
+    tableName: req.body.tablename,
     url: req.body.url,
     headerText: req.body.headerText,
   })
-  res.send(`https://humbletitan-nextjs.vercel.app//due-diligence/filtered/${req.body.url}`)
-  // res.send(customRoutes)
+  res.send(`https://humbletitan-nextjs.vercel.app/due-diligence/filtered/${req.body.url}`)
 })
 
 app.get('/filtered-data/:slug', async (req, res) => {
