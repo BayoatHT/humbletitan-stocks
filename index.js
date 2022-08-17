@@ -37,6 +37,9 @@ const StockColsingPrice = []
 const Peers = []
 const customRoutes = []
 
+
+// Dynamo Database Confiqurations
+// 
 // const getData = async (TABLE_NAME, arrayName) => {
 //   const params = {
 //     TableName: TABLE_NAME,
