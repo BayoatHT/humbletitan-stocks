@@ -924,7 +924,6 @@ app.get('/marketkCap/:name', (req, res) => {
     let val = item.name.replace(/[^0-9.-]+/g, '').replace('.00', '')
     return val >= min && val <= max
   })
-  console.log(name)
   let a = pageNo === 1 ? 0 : pageNo * 30 - 30
   let b = pageNo * 30
   let sliced = data?.map((item) => item?.items[0]).slice(a, b)
@@ -1106,7 +1105,7 @@ app.post('/filteredData', jsonParser, (req, res) => {
     url: req.body.url,
     headerText: req.body.headerText,
   })
-  res.send(`https://humbletitan-nextjs.vercel.app/due-diligence/filtered/${req.body.url}`)
+  res.send(`https://humbletitan.com/due-diligence/filtered/${req.body.url}`)
 })
 
 app.get('/filtered-data/:slug', async (req, res) => {
