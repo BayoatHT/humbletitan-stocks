@@ -281,7 +281,7 @@ const addCustomRouteToSheet = async ({
 
   const googleSheets = google.sheets({ version: 'v4', auth: client })
 
-  const spreadsheetId = '16erRk6sE2t2HEiBeRzifr9plFQPBaVnR_5tnQtmQVLM'
+  const spreadsheetId = '1h2OON6s5c1Fn5Sdt8tuQT8vA77lkRYXdnVtyEtqFyBk'
 
   await googleSheets.spreadsheets.values.append({
     auth,
