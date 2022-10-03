@@ -10,7 +10,7 @@ const fs = require('fs')
 
 const app = express()
 app.use(express.static(path.join(__dirname, './')))
-
+app.use(express.json())
 app.use(
   cors({
     origin: '*',
@@ -35,7 +35,8 @@ const topGainers = []
 const topLosers = []
 const StockColsingPrice = []
 const Peers = []
-const customRoutes = []
+var customRoutes = []
+var allMetaDatas = []
 
 
 // Dynamo Database Confiqurations
@@ -153,16 +154,67 @@ const getAllCustomUrls = async () => {
   })
   let rows = getRows.data.values.slice(1)
   let headings = getRows.data.values[0]
+  var arr = []
   rows.forEach((rows, i) => {
     var value = {}
     headings.forEach((title, j) => {
       Object.assign(value, { [title.toLowerCase()]: rows[j] })
     })
-    customRoutes.push(value)
+    arr.push(value)
   })
+  customRoutes = arr
+}
+getAllCustomUrls()
+
+const getAllMetaData = async () => {
+  const auth = new google.auth.GoogleAuth({
+    keyFile: path.resolve('./credintials.json'),
+    scopes: 'https://www.googleapis.com/auth/spreadsheets',
+  })
+
+  const client = await auth.getClient()
+
+  const googleSheets = google.sheets({ version: 'v4', auth: client })
+
+  const spreadsheetId = '1h2OON6s5c1Fn5Sdt8tuQT8vA77lkRYXdnVtyEtqFyBk'
+  const range = 'HT URL + Meta Data Updater!A:AD'
+
+  const getRows = await googleSheets.spreadsheets.values.get({
+    auth,
+    spreadsheetId,
+    range,
+  })
+  let rows = getRows.data.values.slice(1)
+  let headings = getRows.data.values[0]
+  var arr = []
+  rows.forEach((rows, i) => {
+    var value = {}
+    headings.forEach((title, j) => {
+      Object.assign(value, { [title.toLowerCase()]: rows[j] })
+    })
+    arr.push(value)
+  })
+  return allMetaDatas = arr
 }
 
-getAllCustomUrls()
+
+
+app.get('/getMetaData', (req, res)=> {
+  var metaData;
+  const url = req.query?.url
+  getAllMetaData().then((data)=> {
+    metaData = data.find(item=> item.route === url)
+  }).then(()=> {
+    if(metaData){
+      res.status(200).send(metaData)
+    }else{
+      res.status(404).send({message: 'Not found.'})
+    }
+  })
+  .catch((e)=> {
+    res.status(400).send(e.message)
+  })
+})
 
 //////////////// async function getData(arg1, arg2, arg3)
 getData(
@@ -254,6 +306,10 @@ getData(
   .then((aja) => console.log('Stock Colsing Price'))
   .catch((error) => console.log('Stock Colsing Price', error.message))
 
+
+
+////////// Codes were used to get data from AWS DynamoDB
+/////
 // getData('FinancialRatiosTTM',allFinancialRatios).then(aja => console.log(""))
 // getData('KeyMetricsTTM',allKeyMetrics).then(aja => console.log(""))
 // getData('Ratings',allRatings).then(aja => console.log(""))
@@ -267,7 +323,8 @@ getData(
 const addCustomRouteToSheet = async ({
   url,
   tableName,
-  filterValue,
+  value1,
+  value2,
   filterCondition,
   filterlabel,
   headerText,
@@ -286,18 +343,34 @@ const addCustomRouteToSheet = async ({
   await googleSheets.spreadsheets.values.append({
     auth,
     spreadsheetId,
-    range: 'HT-custom-pages!A:G',
+    range: 'HT-custom-pages!A:H',
     valueInputOption: 'USER_ENTERED',
     resource: {
       values: [
         [
           url,
           tableName,
-          filterValue,
           filterCondition,
+          value1,
+          value2,
           filterlabel,
           headerText.heading,
           headerText.description,
+        ],
+      ],
+    },
+  })
+  
+  url = `/due-diligence/filtered/${url}/`
+  await googleSheets.spreadsheets.values.append({
+    auth,
+    spreadsheetId,
+    range: 'HT URL + Meta Data Updater!A:A',
+    valueInputOption: 'USER_ENTERED',
+    resource: {
+      values: [
+        [
+          url,
         ],
       ],
     },
@@ -690,6 +763,61 @@ app.get('/getGreaterThan/:routeName', (req, res) => {
   filtered.sort((a, b) => a?.Info[label] - b?.Info[label])
   res.json(filtered)
 })
+
+app.get('/getInBetween/:routeName', (req, res) => {
+  let { routeName } = req.params
+  const { label, value1, value2 } = req.query
+  let valueSearched1 = +value1
+  let valueSearched2 = +value2
+  let valueOfItem
+  const filtered = []
+  switch (routeName) {
+    case 'allCompanyProfile':
+      allCompanyProfile.map((item) => {
+        valueOfItem = +item.Info[label]
+        valueOfItem >= valueSearched1 && valueOfItem <= valueSearched2  && valueOfItem != '' && filtered.push(item)
+      })
+      break
+    case 'allSharesFloat':
+      allSharesFloat.map((item) => {
+        valueOfItem = +item.Info[label]
+        valueOfItem >= valueSearched1 && valueOfItem <= valueSearched2 != '' && filtered.push(item)
+      })
+      break
+    case 'allFinancialRatios':
+      allFinancialRatios.map((item) => {
+        valueOfItem = +item.Info[label]
+        valueOfItem >= valueSearched1 && valueOfItem <= valueSearched2 != '' && filtered.push(item)
+      })
+      break
+    case 'allKeyMetrics':
+      allKeyMetrics.map((item) => {
+        valueOfItem = +item.Info[label]
+        valueOfItem >= valueSearched1 && valueOfItem <= valueSearched2 != '' && filtered.push(item)
+      })
+      break
+    case 'allRatings':
+      allRatings.map((item) => {
+        valueOfItem = +item.Info[label]
+        valueOfItem >= valueSearched1 && valueOfItem <= valueSearched2 != '' && filtered.push(item)
+      })
+      break
+    case 'allRealTimeQuotes':
+      allRealTimeQuotes.map((item) => {
+        valueOfItem = +item.Info[label]
+        valueOfItem >= valueSearched1 && valueOfItem <= valueSearched2 != '' && filtered.push(item)
+      })
+      break
+    case 'allFinancialGrowth':
+      allFinancialGrowth.map((item) => {
+        valueOfItem = +item.Info[label]
+        valueOfItem >= valueSearched1 && valueOfItem <= valueSearched2 != '' && filtered.push(item)
+      })
+      break
+  }
+  filtered.sort((a, b) => b?.Info[label] - a?.Info[label])
+  res.json(filtered)
+})
 app.get('/getStartingWith/:routeName', (req, res) => {
   let { routeName } = req.params
   const { label, value } = req.query
@@ -1074,7 +1202,9 @@ app.get('/companynames', async (req, res) => {
 app.post('/filteredData', jsonParser, (req, res) => {
   let filterlabel = req.query.filterlabel
   let filterCondition = req.query.filterCondition
-  let filterValue = req.query.filterValue
+  let filterValue1 = req.query.filterValue1
+  let filterValue2 = req.query?.filterValue2
+
   // let data = { profile: [], financial: [] }
   // let newData = []
   // req.body.data.map((i) => {
@@ -1092,7 +1222,8 @@ app.post('/filteredData', jsonParser, (req, res) => {
   customRoutes.push({
     filterlabel,
     filterCondition,
-    filterValue,
+    value1 : filterValue1,
+    value2 : filterValue2 ? filterValue2 : "",
     tableName: req.body.tablename,
     url: req.body.url,
     headerText: req.body.headerText,
@@ -1100,335 +1231,402 @@ app.post('/filteredData', jsonParser, (req, res) => {
   addCustomRouteToSheet({
     filterlabel,
     filterCondition,
-    filterValue,
+    value1 : filterValue1,
+    value2 : filterValue2 ? filterValue2 : "" ,
     tableName: req.body.tablename,
     url: req.body.url,
     headerText: req.body.headerText,
+  }).then(()=> {
+    getAllCustomUrls()
+    res.send(`http://localhost:3000/due-diligence/filtered/${req.body.url}`)
+  }).catch((e)=> {
+    res.status(500).send(e)
   })
-  res.send(`https://humbletitan.com/due-diligence/filtered/${req.body.url}`)
 })
 
 app.get('/filtered-data/:slug', async (req, res) => {
   const slug = req.params.slug
-  const slugData = await customRoutes.find((item) => item.url === slug)
-  console.log('slug', slug)
-  console.log('slugData', slugData)
+  getAllCustomUrls().then(()=> {
+    const slugData = customRoutes.find((item) => item.url === slug)
+    console.log('slug', slug)
+    console.log('slugData', slugData)
 
-  const filterlabel = slugData.filterlabel.toLowerCase()
-  const filterCondition = slugData.filtercondition
-  const filterValue = slugData.filtervalue
-  const headerText = {heading: slugData.heading, description: slugData.description} 
-  const tableName = slugData.tablename
+    const filterlabel = slugData?.filterlabel?.toLowerCase()
+    const filterCondition = slugData?.filtercondition
+    const filterValue = slugData?.filtervalue
+    const filterValue2 = slugData?.filtervalue2
+    const headerText = {heading: slugData?.heading, description: slugData?.description} 
+    const tableName = slugData?.tablename
 
-  let filteredData = []
-  const filtertionOfFilteredData = (filtered) => {
-    const fD = filtered
-    // fD.sort((a, b) => a?.Info[filter.toLocaleLowerCase()] - b?.Info[filter.toLocaleLowerCase()])
-    let newData = []
-    if (fD.length > 50) {
-      for (let i = 1; i <= 50; i++) {
-        newData.push(fD[i])
+    let filteredData = []
+    const filtertionOfFilteredData = (filtered) => {
+      const fD = filtered
+      // fD.sort((a, b) => a?.Info[filter.toLocaleLowerCase()] - b?.Info[filter.toLocaleLowerCase()])
+      let newData = []
+      if (fD.length > 50) {
+        for (let i = 1; i <= 50; i++) {
+          newData.push(fD[i])
+        }
+        let d = { data: [...newData] }
+        filteredData = d
+      } else {
+        let d = { data: fD }
+        filteredData = d
       }
-      let d = { data: [...newData] }
-      filteredData = d
-    } else {
-      let d = { data: fD }
-      filteredData = d
+      // let newCompanies = []
+      // fD.map(item=>{
+      //     allCompanies.map(i=> item?.Symbol === i?.Symbol && newCompanies.push(i) )
+      // })
+      // setAllFilteredCompanies([...newCompanies])
+      // setLoading(false)
     }
-    // let newCompanies = []
-    // fD.map(item=>{
-    //     allCompanies.map(i=> item?.Symbol === i?.Symbol && newCompanies.push(i) )
+    if (filterCondition === 'Starting With') {
+      let filtered = []
+      switch (`all${tableName}`) {
+        case 'allCompanyProfile':
+          allCompanyProfile.map((item) => {
+            item.Info[filterlabel][0] === filterValue && filtered.push(item)
+          })
+          break
+        case 'allSharesFloat':
+          allSharesFloat.map((item) => {
+            item.Info[filterlabel][0] === filterValue && filtered.push(item)
+          })
+          break
+        case 'allFinancialRatios':
+          allFinancialRatios.map((item) => {
+            item.Info[filterlabel][0] === filterValue && filtered.push(item)
+          })
+          break
+        case 'allKeyMetrics':
+          allKeyMetrics.map((item) => {
+            item.Info[filterlabel][0] === filterValue && filtered.push(item)
+          })
+          break
+        case 'allRatings':
+          allRatings.map((item) => {
+            item.Info[filterlabel][0] === filterValue && filtered.push(item)
+          })
+          break
+        case 'allRealTimeQuotes':
+          allRealTimeQuotes.map((item) => {
+            item.Info[filterlabel][0] === filterValue && filtered.push(item)
+          })
+          break
+        case 'allFinancialGrowth':
+          allFinancialGrowth.map((item) => {
+            item.Info[filterlabel][0] === filterValue && filtered.push(item)
+          })
+          break
+      }
+      filtertionOfFilteredData(filtered)
+    } else if (filterCondition === 'Ending With') {
+      const filtered = []
+      switch (`all${tableName}`) {
+        case 'allCompanyProfile':
+          allCompanyProfile.map((item) => {
+            item.Info[filterlabel][item.Info[filterlabel].length - 1] ===
+              filterValue && filtered.push(item)
+          })
+          break
+        case 'allSharesFloat':
+          allSharesFloat.map((item) => {
+            item.Info[filterlabel][item.Info[filterlabel].length - 1] ===
+              filterValue && filtered.push(item)
+          })
+          break
+        case 'allFinancialRatios':
+          allFinancialRatios.map((item) => {
+            item.Info[filterlabel][item.Info[filterlabel].length - 1] ===
+              filterValue && filtered.push(item)
+          })
+          break
+        case 'allKeyMetrics':
+          allKeyMetrics.map((item) => {
+            item.Info[filterlabel][item.Info[filterlabel].length - 1] ===
+              filterValue && filtered.push(item)
+          })
+          break
+        case 'allRatings':
+          allRatings.map((item) => {
+            item.Info[filterlabel][item.Info[filterlabel].length - 1] ===
+              filterValue && filtered.push(item)
+          })
+          break
+        case 'allRealTimeQuotes':
+          allRealTimeQuotes.map((item) => {
+            item.Info[filterlabel][item.Info[filterlabel].length - 1] ===
+              filterValue && filtered.push(item)
+          })
+          break
+        case 'allFinancialGrowth':
+          allFinancialGrowth.map((item) => {
+            item.Info[filterlabel][item.Info[filterlabel].length - 1] ===
+              filterValue && filtered.push(item)
+          })
+          break
+      }
+      filtertionOfFilteredData(filtered)
+    } else if (filterCondition === 'Equal To') {
+      const filtered = []
+      switch (`all${tableName}`) {
+        case 'allSharesFloat':
+          allSharesFloat.map((item) => {
+            item.Info[filterlabel] == filterValue && filtered.push(item)
+          })
+          break
+        case 'allCompanyProfile':
+          allCompanyProfile.map((item) => {
+            item.Info[filterlabel] == filterValue && filtered.push(item)
+          })
+          break
+        case 'allFinancialRatios':
+          allFinancialRatios.map((item) => {
+            item.Info[filterlabel] == filterValue && filtered.push(item)
+          })
+          break
+        case 'allKeyMetrics':
+          allKeyMetrics.map((item) => {
+            item.Info[filterlabel] == filterValue && filtered.push(item)
+          })
+          break
+        case 'allRatings':
+          allRatings.map((item) => {
+            item.Info[filterlabel] == filterValue && filtered.push(item)
+          })
+          break
+        case 'allRealTimeQuotes':
+          allRealTimeQuotes.map((item) => {
+            item.Info[filterlabel] == filterValue && filtered.push(item)
+          })
+          break
+        case 'allFinancialGrowth':
+          allFinancialGrowth.map((item) => {
+            item.Info[filterlabel] == filterValue && filtered.push(item)
+          })
+          break
+      }
+      filtertionOfFilteredData(filtered)
+    } else if (filterCondition === 'Greater Than') {
+      const filtered = []
+      let valueSearched = +filterValue
+      let valueOfItem
+
+      switch (`all${tableName}`) {
+        case 'allCompanyProfile':
+          allCompanyProfile.map((item) => {
+            valueOfItem = +item.Info[filterlabel]
+            valueOfItem > valueSearched &&
+              valueOfItem != '' &&
+              filtered.push(item)
+          })
+          break
+        case 'allSharesFloat':
+          allSharesFloat.map((item) => {
+            valueOfItem = +item.Info[filterlabel]
+            valueOfItem > valueSearched &&
+              valueOfItem != '' &&
+              filtered.push(item)
+          })
+          break
+        case 'allFinancialRatios':
+          allFinancialRatios.map((item) => {
+            valueOfItem = +item.Info[filterlabel]
+            valueOfItem > valueSearched &&
+              valueOfItem != '' &&
+              filtered.push(item)
+          })
+          break
+        case 'allKeyMetrics':
+          allKeyMetrics.map((item) => {
+            valueOfItem = +item.Info[filterlabel]
+            valueOfItem > valueSearched &&
+              valueOfItem != '' &&
+              filtered.push(item)
+          })
+          break
+        case 'allRatings':
+          allRatings.map((item) => {
+            valueOfItem = +item.Info[filterlabel]
+            valueOfItem > valueSearched &&
+              valueOfItem != '' &&
+              filtered.push(item)
+          })
+          break
+        case 'allRealTimeQuotes':
+          allRealTimeQuotes.map((item) => {
+            valueOfItem = +item.Info[filterlabel]
+            valueOfItem > valueSearched &&
+              valueOfItem != '' &&
+              filtered.push(item)
+          })
+          break
+        case 'allFinancialGrowth':
+          allFinancialGrowth.map((item) => {
+            valueOfItem = +item.Info[filterlabel]
+            valueOfItem > valueSearched &&
+              valueOfItem != '' &&
+              filtered.push(item)
+          })
+          break
+      }
+      filtered.sort((a, b) => a?.Info[filterlabel] - b?.Info[filterlabel])
+      filtertionOfFilteredData(filtered)
+    } else if (filterCondition === 'Less Than') {
+      let valueSearched = +filterValue
+      let valueOfItem
+
+      const filtered = []
+      switch (`all${tableName}`) {
+        case 'allCompanyProfile':
+          allCompanyProfile.map((item) => {
+            valueOfItem = +item.Info[filterlabel]
+            valueOfItem < valueSearched &&
+              valueOfItem != '' &&
+              filtered.push(item)
+          })
+          break
+        case 'allSharesFloat':
+          allSharesFloat.map((item) => {
+            valueOfItem = +item.Info[filterlabel]
+            valueOfItem < valueSearched &&
+              valueOfItem != '' &&
+              filtered.push(item)
+          })
+          break
+        case 'allFinancialRatios':
+          allFinancialRatios.map((item) => {
+            valueOfItem = +item.Info[filterlabel]
+            valueOfItem < valueSearched &&
+              valueOfItem != '' &&
+              filtered.push(item)
+          })
+          break
+        case 'allKeyMetrics':
+          allKeyMetrics.map((item) => {
+            valueOfItem = +item.Info[filterlabel]
+            valueOfItem < valueSearched &&
+              valueOfItem != '' &&
+              filtered.push(item)
+          })
+          break
+        case 'allRatings':
+          allRatings.map((item) => {
+            valueOfItem = +item.Info[filterlabel]
+            valueOfItem < valueSearched &&
+              valueOfItem != '' &&
+              filtered.push(item)
+          })
+          break
+        case 'allRealTimeQuotes':
+          allRealTimeQuotes.map((item) => {
+            valueOfItem = +item.Info[filterlabel]
+            valueOfItem < valueSearched &&
+              valueOfItem != '' &&
+              filtered.push(item)
+          })
+          break
+        case 'allFinancialGrowth':
+          allFinancialGrowth.map((item) => {
+            valueOfItem = +item.Info[filterlabel]
+            valueOfItem < valueSearched &&
+              valueOfItem != '' &&
+              filtered.push(item)
+          })
+          break
+      }
+      filtered.sort((a, b) => b?.Info[filterlabel] - a?.Info[filterlabel])
+      filtertionOfFilteredData(filtered)
+    } else if (filterCondition === 'In between') {
+      let valueSearched = +filterValue
+      let valueSearched2 = +filterValue2
+      let valueOfItem
+
+      const filtered = []
+      switch (`all${tableName}`) {
+        case 'allCompanyProfile':
+          allCompanyProfile.map((item) => {
+            valueOfItem = +item.Info[filterlabel]
+            valueOfItem >= valueSearched && valueOfItem <= valueSearched2  && valueOfItem != '' && filtered.push(item)
+          })
+          break
+        case 'allSharesFloat':
+          allSharesFloat.map((item) => {
+            valueOfItem = +item.Info[filterlabel]
+            valueOfItem >= valueSearched && valueOfItem <= valueSearched2  && valueOfItem != '' && filtered.push(item)
+          })
+          break
+        case 'allFinancialRatios':
+          allFinancialRatios.map((item) => {
+            valueOfItem = +item.Info[filterlabel]
+            valueOfItem >= valueSearched && valueOfItem <= valueSearched2  && valueOfItem != '' && filtered.push(item)
+          })
+          break
+        case 'allKeyMetrics':
+          allKeyMetrics.map((item) => {
+            valueOfItem = +item.Info[filterlabel]
+            valueOfItem >= valueSearched && valueOfItem <= valueSearched2  && valueOfItem != '' && filtered.push(item)
+          })
+          break
+        case 'allRatings':
+          allRatings.map((item) => {
+            valueOfItem = +item.Info[filterlabel]
+            valueOfItem >= valueSearched && valueOfItem <= valueSearched2  && valueOfItem != '' && filtered.push(item)
+          })
+          break
+        case 'allRealTimeQuotes':
+          allRealTimeQuotes.map((item) => {
+            valueOfItem = +item.Info[filterlabel]
+            valueOfItem >= valueSearched && valueOfItem <= valueSearched2  && valueOfItem != '' && filtered.push(item)
+          })
+          break
+        case 'allFinancialGrowth':
+          allFinancialGrowth.map((item) => {
+            valueOfItem = +item.Info[filterlabel]
+            valueOfItem >= valueSearched && valueOfItem <= valueSearched2  && valueOfItem != '' && filtered.push(item)
+          })
+          break
+      }
+      filtered.sort((a, b) => b?.Info[filterlabel] - a?.Info[filterlabel])
+      filtertionOfFilteredData(filtered)
+    }
+
+    let data = { profile: [], financial: [] }
+    let newData = []
+    console.log("filteredData", filteredData)
+    filteredData?.data?.map((i) => {
+      sortedData.map((item) => i.Symbol == item.Symbol && data.profile.push(item))
+      allFinancialRatios.map(
+        (item) => i.Symbol == item.Symbol && data.financial.push(item),
+      )
+    })
+    data?.profile?.map((item) => {
+      data.financial.map(
+        (i) => item.Symbol === i.Symbol && newData.push([i.Info, item.Info]),
+      )
+    })
+
+    // customRoutes.push({
+    //   data: newData,
+    //   url: req.body.url,
+    //   headerText: req.body.headerText,
     // })
-    // setAllFilteredCompanies([...newCompanies])
-    // setLoading(false)
-  }
-  if (filterCondition === 'Starting With') {
-    let filtered = []
-    switch (`all${tableName}`) {
-      case 'allCompanyProfile':
-        allCompanyProfile.map((item) => {
-          item.Info[filterlabel][0] === filterValue && filtered.push(item)
-        })
-        break
-      case 'allSharesFloat':
-        allSharesFloat.map((item) => {
-          item.Info[filterlabel][0] === filterValue && filtered.push(item)
-        })
-        break
-      case 'allFinancialRatios':
-        allFinancialRatios.map((item) => {
-          item.Info[filterlabel][0] === filterValue && filtered.push(item)
-        })
-        break
-      case 'allKeyMetrics':
-        allKeyMetrics.map((item) => {
-          item.Info[filterlabel][0] === filterValue && filtered.push(item)
-        })
-        break
-      case 'allRatings':
-        allRatings.map((item) => {
-          item.Info[filterlabel][0] === filterValue && filtered.push(item)
-        })
-        break
-      case 'allRealTimeQuotes':
-        allRealTimeQuotes.map((item) => {
-          item.Info[filterlabel][0] === filterValue && filtered.push(item)
-        })
-        break
-      case 'allFinancialGrowth':
-        allFinancialGrowth.map((item) => {
-          item.Info[filterlabel][0] === filterValue && filtered.push(item)
-        })
-        break
+    // res.send({ filterValue, filterCondition, filterlabel })
+    // res.send(`http://localhost:3000/filtered-data/${req.body.url}`)
+    if (newData.length > 0){
+      res.send({
+        data: newData,
+        filterlabel,
+        filterCondition,
+        filterValue,
+        filterValue2,
+        headerText,
+      })
+    }else{
+      res.status(404).send({message: 'Data not found.'})
     }
-    filtertionOfFilteredData(filtered)
-  } else if (filterCondition === 'Ending With') {
-    const filtered = []
-    switch (`all${tableName}`) {
-      case 'allCompanyProfile':
-        allCompanyProfile.map((item) => {
-          item.Info[filterlabel][item.Info[filterlabel].length - 1] ===
-            filterValue && filtered.push(item)
-        })
-        break
-      case 'allSharesFloat':
-        allSharesFloat.map((item) => {
-          item.Info[filterlabel][item.Info[filterlabel].length - 1] ===
-            filterValue && filtered.push(item)
-        })
-        break
-      case 'allFinancialRatios':
-        allFinancialRatios.map((item) => {
-          item.Info[filterlabel][item.Info[filterlabel].length - 1] ===
-            filterValue && filtered.push(item)
-        })
-        break
-      case 'allKeyMetrics':
-        allKeyMetrics.map((item) => {
-          item.Info[filterlabel][item.Info[filterlabel].length - 1] ===
-            filterValue && filtered.push(item)
-        })
-        break
-      case 'allRatings':
-        allRatings.map((item) => {
-          item.Info[filterlabel][item.Info[filterlabel].length - 1] ===
-            filterValue && filtered.push(item)
-        })
-        break
-      case 'allRealTimeQuotes':
-        allRealTimeQuotes.map((item) => {
-          item.Info[filterlabel][item.Info[filterlabel].length - 1] ===
-            filterValue && filtered.push(item)
-        })
-        break
-      case 'allFinancialGrowth':
-        allFinancialGrowth.map((item) => {
-          item.Info[filterlabel][item.Info[filterlabel].length - 1] ===
-            filterValue && filtered.push(item)
-        })
-        break
-    }
-    filtertionOfFilteredData(filtered)
-  } else if (filterCondition === 'Equal To') {
-    const filtered = []
-    switch (`all${tableName}`) {
-      case 'allSharesFloat':
-        allSharesFloat.map((item) => {
-          item.Info[filterlabel] == filterValue && filtered.push(item)
-        })
-        break
-      case 'allCompanyProfile':
-        allCompanyProfile.map((item) => {
-          item.Info[filterlabel] == filterValue && filtered.push(item)
-        })
-        break
-      case 'allFinancialRatios':
-        allFinancialRatios.map((item) => {
-          item.Info[filterlabel] == filterValue && filtered.push(item)
-        })
-        break
-      case 'allKeyMetrics':
-        allKeyMetrics.map((item) => {
-          item.Info[filterlabel] == filterValue && filtered.push(item)
-        })
-        break
-      case 'allRatings':
-        allRatings.map((item) => {
-          item.Info[filterlabel] == filterValue && filtered.push(item)
-        })
-        break
-      case 'allRealTimeQuotes':
-        allRealTimeQuotes.map((item) => {
-          item.Info[filterlabel] == filterValue && filtered.push(item)
-        })
-        break
-      case 'allFinancialGrowth':
-        allFinancialGrowth.map((item) => {
-          item.Info[filterlabel] == filterValue && filtered.push(item)
-        })
-        break
-    }
-    filtertionOfFilteredData(filtered)
-  } else if (filterCondition === 'Greater Than') {
-    const filtered = []
-    let valueSearched = +filterValue
-    let valueOfItem
-
-    switch (`all${tableName}`) {
-      case 'allCompanyProfile':
-        allCompanyProfile.map((item) => {
-          valueOfItem = +item.Info[filterlabel]
-          valueOfItem > valueSearched &&
-            valueOfItem != '' &&
-            filtered.push(item)
-        })
-        break
-      case 'allSharesFloat':
-        allSharesFloat.map((item) => {
-          valueOfItem = +item.Info[filterlabel]
-          valueOfItem > valueSearched &&
-            valueOfItem != '' &&
-            filtered.push(item)
-        })
-        break
-      case 'allFinancialRatios':
-        allFinancialRatios.map((item) => {
-          valueOfItem = +item.Info[filterlabel]
-          valueOfItem > valueSearched &&
-            valueOfItem != '' &&
-            filtered.push(item)
-        })
-        break
-      case 'allKeyMetrics':
-        allKeyMetrics.map((item) => {
-          valueOfItem = +item.Info[filterlabel]
-          valueOfItem > valueSearched &&
-            valueOfItem != '' &&
-            filtered.push(item)
-        })
-        break
-      case 'allRatings':
-        allRatings.map((item) => {
-          valueOfItem = +item.Info[filterlabel]
-          valueOfItem > valueSearched &&
-            valueOfItem != '' &&
-            filtered.push(item)
-        })
-        break
-      case 'allRealTimeQuotes':
-        allRealTimeQuotes.map((item) => {
-          valueOfItem = +item.Info[filterlabel]
-          valueOfItem > valueSearched &&
-            valueOfItem != '' &&
-            filtered.push(item)
-        })
-        break
-      case 'allFinancialGrowth':
-        allFinancialGrowth.map((item) => {
-          valueOfItem = +item.Info[filterlabel]
-          valueOfItem > valueSearched &&
-            valueOfItem != '' &&
-            filtered.push(item)
-        })
-        break
-    }
-    filtered.sort((a, b) => a?.Info[filterlabel] - b?.Info[filterlabel])
-    filtertionOfFilteredData(filtered)
-  } else if (filterCondition === 'Less Than') {
-    let valueSearched = +filterValue
-    let valueOfItem
-
-    const filtered = []
-    switch (`all${tableName}`) {
-      case 'allCompanyProfile':
-        allCompanyProfile.map((item) => {
-          valueOfItem = +item.Info[filterlabel]
-          valueOfItem < valueSearched &&
-            valueOfItem != '' &&
-            filtered.push(item)
-        })
-        break
-      case 'allSharesFloat':
-        allSharesFloat.map((item) => {
-          valueOfItem = +item.Info[filterlabel]
-          valueOfItem < valueSearched &&
-            valueOfItem != '' &&
-            filtered.push(item)
-        })
-        break
-      case 'allFinancialRatios':
-        allFinancialRatios.map((item) => {
-          valueOfItem = +item.Info[filterlabel]
-          valueOfItem < valueSearched &&
-            valueOfItem != '' &&
-            filtered.push(item)
-        })
-        break
-      case 'allKeyMetrics':
-        allKeyMetrics.map((item) => {
-          valueOfItem = +item.Info[filterlabel]
-          valueOfItem < valueSearched &&
-            valueOfItem != '' &&
-            filtered.push(item)
-        })
-        break
-      case 'allRatings':
-        allRatings.map((item) => {
-          valueOfItem = +item.Info[filterlabel]
-          valueOfItem < valueSearched &&
-            valueOfItem != '' &&
-            filtered.push(item)
-        })
-        break
-      case 'allRealTimeQuotes':
-        allRealTimeQuotes.map((item) => {
-          valueOfItem = +item.Info[filterlabel]
-          valueOfItem < valueSearched &&
-            valueOfItem != '' &&
-            filtered.push(item)
-        })
-        break
-      case 'allFinancialGrowth':
-        allFinancialGrowth.map((item) => {
-          valueOfItem = +item.Info[filterlabel]
-          valueOfItem < valueSearched &&
-            valueOfItem != '' &&
-            filtered.push(item)
-        })
-        break
-    }
-    filtered.sort((a, b) => b?.Info[filterlabel] - a?.Info[filterlabel])
-    filtertionOfFilteredData(filtered)
-  }
-
-  let data = { profile: [], financial: [] }
-  let newData = []
-  console.log("filteredData", filteredData)
-  filteredData.data.map((i) => {
-    sortedData.map((item) => i.Symbol == item.Symbol && data.profile.push(item))
-    allFinancialRatios.map(
-      (item) => i.Symbol == item.Symbol && data.financial.push(item),
-    )
-  })
-  data.profile.map((item) => {
-    data.financial.map(
-      (i) => item.Symbol === i.Symbol && newData.push([i.Info, item.Info]),
-    )
-  })
-
-  // customRoutes.push({
-  //   data: newData,
-  //   url: req.body.url,
-  //   headerText: req.body.headerText,
-  // })
-  // res.send({ filterValue, filterCondition, filterlabel })
-  // res.send(`http://localhost:3000/filtered-data/${req.body.url}`)
-  res.send({
-    data: newData,
-    filterlabel,
-    filterCondition,
-    filterValue,
-    headerText,
+  }).catch((e)=> {
+    res.status(500).send(e)
   })
 })
 
@@ -1459,5 +1657,5 @@ app.get('/charts/:symbol', async (req, res, next) => {
 const port = process.env.PORT || 8000
 
 app.listen(port, () => {
-  console.log(`listening on http://localhost:${port}`)
+  console.log(`server is listening on http://localhost:${port}`)
 })
