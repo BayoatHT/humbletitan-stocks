@@ -126,8 +126,8 @@ const getData = async (sheetId, sheetRange, dataArr) => {
       i > 0 && dataArr.push(obj)
     })
   }
-
-  if (sheetRange === 'All Tickers - Company Profile!D3:AM7047') {
+  // this should be exact same as range that is in this function's paramtere 
+  if (sheetRange === 'All Tickers - Company Profile!A1:AM8000') {
     sortArray(dataArr)
   }
 
@@ -145,7 +145,7 @@ const getAllCustomUrls = async () => {
   const googleSheets = google.sheets({ version: 'v4', auth: client })
 
   const spreadsheetId = '1h2OON6s5c1Fn5Sdt8tuQT8vA77lkRYXdnVtyEtqFyBk'
-  const range = 'HT-custom-pages!A:G'
+  const range = 'HT-custom-pages!A:H'
 
   const getRows = await googleSheets.spreadsheets.values.get({
     auth,
@@ -219,11 +219,11 @@ app.get('/getMetaData', (req, res)=> {
 //////////////// async function getData(arg1, arg2, arg3)
 getData(
   '1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY',
-  'All Tickers - Company Profile!D3:AM7047',
+  'All Tickers - Company Profile!A1:AM8000',
   allCompanyProfile,
 )
   .then((aja) => console.log('Company Profile'))
-  .catch((error) => console.log('Company Profile', error.message))
+  .catch((error) => console.log('Company Profile err', error))
 
 getData(
   '1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY',
@@ -235,7 +235,7 @@ getData(
 
 getData(
   '1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY',
-  'All Tickers - Financial Ratios TTM!D3:BJ7874',
+  'All Tickers - Financial Ratios TTM!A1:BJ7874',
   allFinancialRatios,
 )
   .then((aja) => console.log('Financial Ratios TTM'))
@@ -243,7 +243,7 @@ getData(
 
 getData(
   '1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY',
-  'All Tickers - Key Metrics TTM!D3:BL7874',
+  'All Tickers - Key Metrics TTM!A1:BL7874',
   allKeyMetrics,
 )
   .then((aja) => console.log('Key Metrics TTM'))
@@ -251,7 +251,7 @@ getData(
 
 getData(
   '1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY',
-  'All Tickers - Real Time Quote!D3:Y7416',
+  'All Tickers - Real Time Quote!A1:Y7416',
   allRealTimeQuotes,
 )
   .then((aja) => console.log('Real Time Quote'))
@@ -259,7 +259,7 @@ getData(
 
 getData(
   '1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY',
-  'All Tickers - Financial Growth ANN!D3:AN7053',
+  'All Tickers - Financial Growth ANN!A1:AN7053',
   allFinancialGrowth,
 )
   .then((aja) => console.log('Financial Growth ANN'))
@@ -267,7 +267,7 @@ getData(
 
 getData(
   '1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY',
-  'Ratings!D3:T6025',
+  'Ratings!D3:T8000',
   allRatings,
 )
   .then((aja) => console.log('Ratings'))
@@ -300,7 +300,7 @@ getData('1ciKRDKoyL_d3GCMzh23-my5mtizITmNtBxqmvY7-VfY', 'Peers!D3:N6660', Peers)
   .catch((error) => console.log('Peers', error.message))
 getData(
   '1sS5DQH7bcQpKz--Nu4oK1pdRaaIQVqvINjCxYRdgQS8',
-  '90 Stock Closing Price!E3:DU7555',
+  '90 Stock Closing Price!A3:DU7555',
   StockColsingPrice,
 )
   .then((aja) => console.log('Stock Colsing Price'))
@@ -1136,7 +1136,6 @@ app.get('/competitors/:symbol', async (req, res) => {
     // const profile = await getDataById(id, Peers_Table)
     // const competitorsSymbols = profile?.Item?.Info?.Peers
     const profile = Peers.find((item) => item.Symbol === id)
-    // const competitorsSymbols = profile?.Item?.Info?.Peers
     const competitorsSymbols = profile?.Peers
     let c = []
     competitorsSymbols.map((item) => {
